@@ -21,12 +21,24 @@ public class Mintel {
         String input = scanner.nextLine();
 
         while(!input.equals("bye")) {
+            String[] inputList = input.split(" ");
             System.out.println("____________________________________________________________");
             if(input.equals("list")) {
+                System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < listOfInput.size(); i++) {
                     Task currTask = listOfInput.get(i);
-                    System.out.println((i + 1) + ". " + currTask.getName());
+                    System.out.println((i + 1) + "." + currTask.getStatusLine());
                 }
+            } else if(inputList[0].equals("mark")) {
+                System.out.println("Nice! I've marked this task as done:");
+                Task currTask = listOfInput.get(Integer.parseInt(inputList[1]) - 1);
+                currTask.markAsDone();
+                System.out.println(currTask.getStatusLine());
+            } else if(inputList[0].equals("unmark")) {
+                System.out.println("OK, I've marked this task as not done yet:");
+                Task currTask = listOfInput.get(Integer.parseInt(inputList[1]) - 1);
+                currTask.unmarkAsDone();
+                System.out.println(currTask.getStatusLine());
             } else {
                 Task newTask = new Task(input);
                 listOfInput.add(newTask);
