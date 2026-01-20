@@ -41,6 +41,8 @@ public class Mintel {
                 } else if (input.equals("bye" )) {
                     System.out.println("Bye. Hope to see you again soon!" );
                     isExit = true;
+                } else if (input.startsWith("delete ")) {
+                    handleDelete(inputList);
                 } else {
                     throw new InvalidCommandException();
                 }
@@ -67,11 +69,22 @@ public class Mintel {
         }
     }
 
-    private static void handleMark(String[] inputList) throws OutOfRangeException {
+    private static void handleDelete(String[] inputList) throws OutOfRangeException {
         if(Integer.parseInt(inputList[1]) > taskCount) {
             throw new OutOfRangeException();
         }
 
+        Task deleteTask = listOfInput.remove(Integer.parseInt(inputList[1]) - 1);
+        taskCount--;
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + deleteTask);
+        System.out.println("Now you have " + taskCount + " tasks in the list.");
+    }
+
+    private static void handleMark(String[] inputList) throws OutOfRangeException {
+        if(Integer.parseInt(inputList[1]) > taskCount) {
+            throw new OutOfRangeException();
+        }
         System.out.println("Nice! I've marked this task as done:");
         Task currTask = listOfInput.get(Integer.parseInt(inputList[1]) - 1);
         currTask.markAsDone();
