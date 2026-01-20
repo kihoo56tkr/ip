@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Mintel {
     public static void main(String[] args) {
         String logo = "  /\\_/\\  \n" +
@@ -8,8 +10,20 @@ public class Mintel {
         System.out.println("____________________________________________________________\n" +
                         "Hello! I'm MIntel\n" +
                         "What can I do for you?\n" +
-                        "____________________________________________________________\n" +
-                        "Bye. Hope to see you again soon!\n" +
                         "____________________________________________________________");
+
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        while(!input.equals("bye")) {
+            System.out.println("____________________________________________________________\n" +
+                    input + "\n" + "____________________________________________________________");
+            input = scanner.nextLine();
+        }
+
+        System.out.println("____________________________________________________________\n" +
+                "Bye. Hope to see you again soon!\n" +
+                "____________________________________________________________");
+
+        scanner.close();
     }
 }
