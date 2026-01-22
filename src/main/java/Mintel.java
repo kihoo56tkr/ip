@@ -41,7 +41,7 @@ public class Mintel {
                 } else if (input.equals("bye" )) {
                     System.out.println("Bye. Hope to see you again soon!" );
                     isExit = true;
-                } else if (input.startsWith("delete ")) {
+                } else if (input.startsWith("delete")) {
                     handleDelete(inputList);
                 } else {
                     throw new InvalidCommandException();
@@ -103,7 +103,7 @@ public class Mintel {
 
     private static void handleTodo(String input) throws EmptyDescriptionException {
         if(input.length() <= 5) {
-
+            throw new EmptyDescriptionException("todo");
         }
 
         input = input.substring(5).trim();
