@@ -1,3 +1,12 @@
+package mintel;
+
+import mintel.ui.Ui;
+import mintel.storage.Storage;
+import mintel.model.tasklist.TaskList;
+import mintel.logic.parser.Parser;
+import mintel.logic.command.Command;
+import mintel.exception.MintelException;
+
 public class Mintel {
     private Storage storage;
     private TaskList tasks;

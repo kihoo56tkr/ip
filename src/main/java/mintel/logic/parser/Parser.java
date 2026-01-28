@@ -1,3 +1,16 @@
+package mintel.logic.parser;
+
+import mintel.logic.command.Command;
+import mintel.logic.command.ExitCommand;
+import mintel.logic.command.ListCommand;
+import mintel.logic.command.AddTodoCommand;
+import mintel.logic.command.AddDeadlineCommand;
+import mintel.logic.command.AddEventCommand;
+import mintel.logic.command.MarkCommand;
+import mintel.logic.command.DeleteCommand;
+import mintel.exception.MintelException;
+import mintel.exception.InvalidCommandException;
+
 public class Parser {
     public static Command parse(String input) throws MintelException {
         String[] inputList = input.split(" ");

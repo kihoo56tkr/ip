@@ -1,3 +1,13 @@
+package mintel.logic.command;
+
+import mintel.exception.EmptyDescriptionException;
+import mintel.model.tasklist.TaskList;
+import mintel.ui.Ui;
+import mintel.storage.Storage;
+import mintel.exception.MintelException;
+import mintel.exception.EmptyDescriptionException;
+import java.io.IOException;
+
 public class MarkCommand extends Command {
     private String[] inputList;
     private boolean isMark;

@@ -1,8 +1,12 @@
+package mintel.storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import mintel.model.task.Task;
+import mintel.exception.MintelException;
 
 public class Storage {
     private String filePath;

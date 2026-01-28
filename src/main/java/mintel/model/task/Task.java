@@ -1,3 +1,7 @@
+package mintel.model.task;
+
+import mintel.exception.MintelException;
+
 public abstract class Task {
     protected String name;
     protected boolean isDone;

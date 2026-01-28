@@ -1,25 +1,23 @@
+package mintel.model.task;
+
+import mintel.exception.MintelException;
+import mintel.exception.InvalidDateFormatException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
-public class Event extends Task {
-    protected LocalDate from;
-    protected LocalDate to;
-    protected String displayFrom;
-    protected String displayTo;
+public class Deadline extends Task {
+    protected String displayBy;
+    protected LocalDate byDate;
 
-    public Event(String name, String from, String to) throws InvalidDateFormatException, DateLogicException {
-        super(name);
-        this.from = parseDate(from.trim());
-        this.to = parseDate(to.trim());
+    public Deadline(String description, String by) throws InvalidDateFormatException {
+        super(description);
+        this.byDate = parseDate(by.trim());
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-        this.displayFrom = this.from.format(displayFormatter);
-        this.displayTo = this.to.format(displayFormatter);
-        if(!this.from.isBefore(this.to)) {
-            throw new DateLogicException("");
-        }
+        this.displayBy = this.byDate.format(displayFormatter);
     }
 
     private LocalDate parseDate(String dateStr) throws InvalidDateFormatException {
@@ -40,15 +38,13 @@ public class Event extends Task {
             }
         }
     }
-
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.displayFrom + " to: " + this.displayTo + ")";
+        return "[D]" + super.toString() + " (by: " + this.displayBy + ")";
     }
 
     @Override
     public String toStringFile() {
-        return "E | " + super.getStatusIconFile() + " | " + super.name + " | From: " + this.displayFrom + " | To: " + this.displayTo;
+        return "D | " + super.getStatusIconFile() + " | " + super.name + " | " + this.displayBy;
     }
 }
-
