@@ -1,5 +1,1 @@
-T | 1 | homework
-E | 0 | hello | From: Jan 08 2026 | To: Sep 03 2026
-T | 0 | h1
-E | 0 | h2 | From: Jan 10 2026 | To: Jan 11 2026
-D | 0 | h7 | Jan 08 2026
+T | 0 | he
