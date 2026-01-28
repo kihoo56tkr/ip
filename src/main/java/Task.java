@@ -15,6 +15,10 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
+    public String getStatusIconFile() {
+        return (isDone ? "1" : "0");
+    }
+
     public void markAsDone() {
         this.isDone = true;
     }
@@ -24,6 +28,10 @@ public class Task {
     }
 
     public String toString() {
+        return "[" + this.getStatusIcon() + "] " + this.name;
+    }
+
+    public String toStringFile() {
         return "[" + this.getStatusIcon() + "] " + this.name;
     }
 }

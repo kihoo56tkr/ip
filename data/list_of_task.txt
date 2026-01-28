@@ -1,0 +1,5 @@
+T | 1 | homework
+D | 0 | hello | 5 Jan
+D | 0 | yo | 5Jan
+T | 0 | here
+T | 1 | yohelo
