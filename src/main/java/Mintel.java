@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.io.FileWriter;
@@ -10,10 +9,11 @@ import java.io.IOException;
 public class Mintel {
     private static List<Task> listOfInput = new ArrayList<Task>(100);
     private static int taskCount = 0;
+    private static boolean isExit;
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
-        boolean isExit = false;
+        isExit = false;
 
         String logo = "  /\\_/\\  \n" +
                 " ( o.o ) \n" +
@@ -174,7 +174,7 @@ public class Mintel {
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 
-    private static void handleEvent(String input) throws MissingParameterException, EmptyDescriptionException, IOException {
+    private static void handleEvent(String input) throws MissingParameterException, EmptyDescriptionException, IOException, InvalidDateFormatException, DateLogicException {
         if(input.length() <= 6) {
             throw new EmptyDescriptionException("event");
         }
@@ -216,7 +216,7 @@ public class Mintel {
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 
-    private static void handleDeadline(String input) throws EmptyDescriptionException, MissingParameterException, IOException {
+    private static void handleDeadline(String input) throws EmptyDescriptionException, MissingParameterException, IOException, InvalidDateFormatException {
         if(input.length() <= 9) {
             throw new EmptyDescriptionException("deadline");
         }
@@ -322,10 +322,13 @@ public class Mintel {
                     listOfInput.add(parseValidatedLine(line));
                 }
             }
-        } catch (FileNotFoundException e) {}
+        } catch (FileNotFoundException | InvalidDateFormatException | DateLogicException e) {
+            isExit = true;
+            System.out.println(e.getMessage());
+        }
     }
 
-    private static Task parseValidatedLine(String line) {
+    private static Task parseValidatedLine(String line) throws InvalidDateFormatException, DateLogicException {
         String[] parts = line.split("\\|");
         String type = parts[0].trim();
         boolean isDone = parts[1].trim().equals("1");
@@ -340,9 +343,10 @@ public class Mintel {
                 task = new Deadline(description, parts[3].trim());
                 break;
             case "E":
-                task = new Event(description, parts[3].trim(), parts[4].trim());
+                task = new Event(description, parts[3].trim().substring(5), parts[4].trim().substring(3));
                 break;
             default:
+                isExit = true;
                 throw new IllegalStateException("Validated file has invalid type: " + type);
         }
 
