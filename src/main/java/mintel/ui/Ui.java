@@ -1,12 +1,25 @@
 package mintel.ui;
 
 import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 public class Ui {
     private Scanner scanner;
 
     public Ui() {
         this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        try {
+            if (scanner.hasNextLine()) {
+                return scanner.nextLine();
+            } else {
+                return "bye";
+            }
+        } catch (NoSuchElementException | IllegalStateException e) {
+            return "bye";
+        }
     }
 
     public void showWelcome(String logo) {
@@ -20,10 +33,6 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
-    public String readCommand() {
-        return scanner.nextLine();
-    }
-
     public void showMessage(String message) {
         System.out.println(message);
     }
@@ -33,6 +42,8 @@ public class Ui {
     }
 
     public void close() {
-        scanner.close();
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 }
