@@ -1,3 +1,14 @@
+package mintel.logic.command;
+
+import mintel.exception.EmptyDescriptionException;
+import mintel.exception.MissingParameterException;
+import mintel.model.task.Deadline;
+import mintel.model.tasklist.TaskList;
+import mintel.ui.Ui;
+import mintel.storage.Storage;
+import mintel.exception.MintelException;
+import java.io.IOException;
+
 public class AddDeadlineCommand extends Command {
     private String input;
 

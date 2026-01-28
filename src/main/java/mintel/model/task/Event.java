@@ -1,18 +1,31 @@
+package mintel.model.task;
+
+import mintel.exception.MintelException;
+import mintel.exception.InvalidDateFormatException;
+import mintel.exception.DateLogicException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
-public class Deadline extends Task {
-    protected String displayBy;
-    protected LocalDate byDate;
+public class Event extends Task {
+    protected LocalDate from;
+    protected LocalDate to;
+    protected String displayFrom;
+    protected String displayTo;
 
-    public Deadline(String description, String by) throws InvalidDateFormatException {
-        super(description);
-        this.byDate = parseDate(by.trim());
+    public Event(String name, String from, String to) throws InvalidDateFormatException, DateLogicException {
+        super(name);
+        this.from = parseDate(from.trim());
+        this.to = parseDate(to.trim());
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-        this.displayBy = this.byDate.format(displayFormatter);
+        this.displayFrom = this.from.format(displayFormatter);
+        this.displayTo = this.to.format(displayFormatter);
+        if(!this.from.isBefore(this.to)) {
+            throw new DateLogicException("");
+        }
     }
 
     private LocalDate parseDate(String dateStr) throws InvalidDateFormatException {
@@ -33,13 +46,15 @@ public class Deadline extends Task {
             }
         }
     }
+
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.displayBy + ")";
+        return "[E]" + super.toString() + " (from: " + this.displayFrom + " to: " + this.displayTo + ")";
     }
 
     @Override
     public String toStringFile() {
-        return "D | " + super.getStatusIconFile() + " | " + super.name + " | " + this.displayBy;
+        return "E | " + super.getStatusIconFile() + " | " + super.name + " | From: " + this.displayFrom + " | To: " + this.displayTo;
     }
 }
+

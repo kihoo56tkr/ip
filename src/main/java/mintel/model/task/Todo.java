@@ -1,3 +1,8 @@
+package mintel.model.task;
+
+import mintel.exception.MintelException;
+import mintel.exception.EmptyDescriptionException;
+
 public class Todo extends Task {
 
     public Todo(String name) {
