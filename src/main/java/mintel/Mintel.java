@@ -7,12 +7,23 @@ import mintel.logic.parser.Parser;
 import mintel.logic.command.Command;
 import mintel.exception.MintelException;
 
+/**
+ * Main class for the Mintel chatbot application.
+ * Mintel is a task management chatbot that helps users track todos, deadlines, and events.
+ * It supports saving tasks to file and loading them on startup.
+ */
 public class Mintel {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private boolean isExit;
 
+
+    /**
+     * Constructs a Mintel chatbot instance with the specified file path for data storage.
+     *
+     * @param filePath The path to the file where tasks will be saved/loaded.
+     */
     public Mintel(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -73,6 +84,10 @@ public class Mintel {
         }
     }
 
+    /**
+     * Runs the Mintel chatbot, handling user commands until the exit command is given.
+     * This is the main loop of the application.
+     */
     public void run() {
         while (!isExit) {
             try {
@@ -90,6 +105,11 @@ public class Mintel {
         ui.close();
     }
 
+    /**
+     * The entry point of the Mintel application.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         new Mintel("./data/list_of_task.txt").run();
     }

@@ -8,13 +8,30 @@ import mintel.exception.MintelException;
 import mintel.exception.EmptyDescriptionException;
 import java.io.IOException;
 
+/**
+ * AddTodoCommand in the Mintel application.
+ */
 public class AddTodoCommand extends Command {
     private String input;
 
+    /**
+     * Constructs a AddTodoCommand command with the given description.
+     *
+     * @param input The command given by the user.
+     */
     public AddTodoCommand(String input) {
         this.input = input;
     }
 
+    /**
+     * Executes the command with the given task list, UI, and storage by adding a new Todo Task to the task list.
+     *
+     * @param tasks The task list to operate on.
+     * @param ui The user interface for displaying messages.
+     * @param storage The storage handler for saving tasks.
+     * @throws MintelException If there's an error during command execution.
+     * @throws IOException If there's an error saving tasks to file.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
         if (input.length() <= 5) {

@@ -10,12 +10,24 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+/**
+ * Represents a event task that needs to be done before a specific date.
+ * Supports date formats: yyyy-MM-dd and MMM d yyyy.
+ */
 public class Event extends Task {
     protected LocalDate from;
     protected LocalDate to;
     protected String displayFrom;
     protected String displayTo;
 
+    /**
+     * Constructs an Event task with description and due date.
+     *
+     * @param name The description of the event.
+     * @param from The starting date string (yyyy-MM-dd or MMM d yyyy format).
+     * @param to The ending date string (yyyy-MM-dd or MMM d yyyy format).
+     * @throws InvalidDateFormatException If the date format is invalid.
+     */
     public Event(String name, String from, String to) throws InvalidDateFormatException, DateLogicException {
         super(name);
         this.from = parseDate(from.trim());
@@ -47,11 +59,23 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Returns a string representation of the event for display.
+     * Format: [E][status] description (by: formatted date)
+     *
+     * @return Formatted string representation.
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.displayFrom + " to: " + this.displayTo + ")";
     }
 
+    /**
+     * Returns a string representation of the event for file storage.
+     * Format: E | status | description | formatted from date | formatted to date
+     *
+     * @return Formatted string for file storage.
+     */
     @Override
     public String toStringFile() {
         return "E | " + super.getStatusIconFile() + " | " + super.name + " | From: " + this.displayFrom + " | To: " + this.displayTo;
