@@ -2,6 +2,7 @@ package mintel.model.tasklist;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import mintel.model.task.Task;
 import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;

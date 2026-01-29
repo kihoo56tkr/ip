@@ -2,7 +2,9 @@
 package mintel.logic.parser;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import mintel.logic.command.Command;
 import mintel.logic.command.ExitCommand;
 import mintel.logic.command.ListCommand;
