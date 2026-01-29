@@ -5,6 +5,7 @@ import mintel.ui.Ui;
 import mintel.storage.Storage;
 import mintel.exception.EmptyDescriptionException;
 import mintel.exception.MintelException;
+
 import java.io.IOException;
 
 public class ExitCommand extends Command {

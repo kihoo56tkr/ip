@@ -54,23 +54,23 @@ public abstract class Task {
         Task task;
 
         switch (type) {
-            case "T":
-                task = new Todo(description);
-                break;
-            case "D":
-                if (parts.length < 4) {
-                    throw new MintelException("Invalid deadline format: " + fileString);
-                }
-                task = new Deadline(description, parts[3]);
-                break;
-            case "E":
-                if (parts.length < 5) {
-                    throw new MintelException("Invalid event format: " + fileString);
-                }
-                task = new Event(description, parts[3].substring(5), parts[4].substring(3));
-                break;
-            default:
-                throw new MintelException("Unknown task type in file: " + type);
+        case "T":
+            task = new Todo(description);
+            break;
+        case "D":
+            if (parts.length < 4) {
+                throw new MintelException("Invalid deadline format: " + fileString);
+            }
+            task = new Deadline(description, parts[3]);
+            break;
+        case "E":
+            if (parts.length < 5) {
+                throw new MintelException("Invalid event format: " + fileString);
+            }
+            task = new Event(description, parts[3].substring(5), parts[4].substring(3));
+            break;
+        default:
+            throw new MintelException("Unknown task type in file: " + type);
         }
 
         if (isDone) {

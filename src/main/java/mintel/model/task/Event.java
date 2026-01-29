@@ -23,7 +23,7 @@ public class Event extends Task {
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         this.displayFrom = this.from.format(displayFormatter);
         this.displayTo = this.to.format(displayFormatter);
-        if(!this.from.isBefore(this.to)) {
+        if (!this.from.isBefore(this.to)) {
             throw new DateLogicException("");
         }
     }
