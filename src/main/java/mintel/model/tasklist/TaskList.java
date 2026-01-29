@@ -128,6 +128,12 @@ public class TaskList {
         return sb.toString().trim();
     }
 
+    /**
+     * Returns a formatted string representation of all filtered tasks that contains keyword.
+     *
+     * @param keyword String of the keyword to filter the tasks.
+     * @return Formatted string of all filtered tasks, or "" if empty.
+     */
     public String getFilteredTasks(String keyword) {
         StringBuilder sb = new StringBuilder("");
         int counter = 1;
