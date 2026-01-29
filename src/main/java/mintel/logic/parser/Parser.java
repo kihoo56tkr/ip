@@ -2,6 +2,7 @@ package mintel.logic.parser;
 
 import mintel.logic.command.Command;
 import mintel.logic.command.ExitCommand;
+import mintel.logic.command.FindCommand;
 import mintel.logic.command.ListCommand;
 import mintel.logic.command.AddTodoCommand;
 import mintel.logic.command.AddDeadlineCommand;
@@ -31,6 +32,8 @@ public class Parser {
             return new ExitCommand();
         } else if (input.startsWith("delete")) {
             return new DeleteCommand(inputList);
+        } else if (input.startsWith("find")) {
+            return new FindCommand(inputList, input);
         } else {
             throw new InvalidCommandException();
         }

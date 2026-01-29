@@ -72,6 +72,18 @@ public class TaskList {
         for (int i = 0; i < tasks.size(); i++) {
             sb.append((i + 1) + "." + tasks.get(i) + "\n");
         }
-        return sb.toString();
+        return sb.toString().trim();
+    }
+
+    public String getFilteredTasks(String keyword) {
+        StringBuilder sb = new StringBuilder("");
+        int counter = 1;
+        for (int i = 0; i < tasks.size(); i++) {
+            if(tasks.get(i).getName().contains(keyword)) {
+                sb.append(counter + "." + tasks.get(i) + "\n");
+                counter += 1;
+            }
+        }
+        return sb.toString().trim();
     }
 }
