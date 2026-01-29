@@ -8,9 +8,18 @@ import java.util.List;
 import mintel.model.task.Task;
 import mintel.exception.MintelException;
 
+/**
+ * Handles loading and saving of tasks to/from a file.
+ * Manages file existence checks and format validation.
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a Storage instance with the specified file path.
+     *
+     * @param filePath The path to the task storage file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
@@ -59,6 +68,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return A list of tasks loaded from the file.
+     * @throws MintelException If there's an error reading the file.
+     */
     public ArrayList<Task> loadTasks() throws MintelException {
         ArrayList<Task> tasks = new ArrayList<>();
         File taskFile = new File(filePath);
@@ -83,6 +98,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves tasks to the storage file.
+     *
+     * @param tasks The list of tasks to save.
+     * @throws IOException If there's an error writing to the file.
+     */
     public void saveTasks(List<Task> tasks) throws IOException {
         File dataDir = new File("./data");
         if (!dataDir.exists()) {

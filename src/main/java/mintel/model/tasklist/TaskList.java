@@ -7,25 +7,49 @@ import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;
 import mintel.exception.EmptyDescriptionException;
 
+/**
+ * Manages a collection of tasks.
+ * Provides operations to add, remove, mark, and retrieve tasks.
+ */
 public class TaskList {
     private List<Task> tasks;
     private int taskCount;
 
+    /**
+     * Constructs an empty TaskList.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
         this.taskCount = 0;
     }
 
+    /**
+     * Constructs a TaskList with existing tasks.
+     *
+     * @param tasks Initial list of tasks.
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
         this.taskCount = tasks.size();
     }
 
+    /**
+     * Adds a task to the list.
+     *
+     * @param task The task to add.
+     */
     public void add(Task task) {
         tasks.add(task);
         taskCount++;
     }
 
+    /**
+     * Removes a task from the list at the specified index.
+     *
+     * @param index The index of the task to remove (0-based).
+     * @return The removed task.
+     * @throws OutOfRangeException If the index is out of bounds.
+     */
     public Task remove(int index) throws MintelException {
         if (index < 0 || index >= taskCount) {
             throw new OutOfRangeException();
@@ -35,6 +59,13 @@ public class TaskList {
         return removedTask;
     }
 
+    /**
+     * Gets the task at the specified index.
+     *
+     * @param index The index of the task to retrieve (0-based).
+     * @return The task at the specified index.
+     * @throws OutOfRangeException If the index is out of bounds.
+     */
     public Task get(int index) throws MintelException {
         if (index < 0 || index >= taskCount) {
             throw new OutOfRangeException();
@@ -51,18 +82,39 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns the number of tasks in the list.
+     *
+     * @return The number of tasks.
+     */
     public int size() {
         return taskCount;
     }
 
+    /**
+     * Checks if the task list is empty.
+     *
+     * @return true if the list is empty, false otherwise.
+     */
     public boolean isEmpty() {
         return tasks.isEmpty();
     }
 
+    /**
+     * Returns all tasks in the list.
+     *
+     * @return A list containing all tasks.
+     */
     public List<Task> getAllTasks() {
         return tasks;
     }
 
+    /**
+     * Returns a formatted string representation of all tasks.
+     * Each task is numbered starting from 1.
+     *
+     * @return Formatted string of all tasks, or "Your list is empty!" if empty.
+     */
     public String getListString() {
         if (tasks.isEmpty()) {
             return "Your list is empty!";

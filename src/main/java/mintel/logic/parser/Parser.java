@@ -11,7 +11,19 @@ import mintel.logic.command.DeleteCommand;
 import mintel.exception.MintelException;
 import mintel.exception.InvalidCommandException;
 
+/**
+ * Parses user input strings into Command objects.
+ * Determines which command the user intends to execute.
+ */
 public class Parser {
+
+    /**
+     * Parses a user input string and returns the corresponding Command object.
+     *
+     * @param input The raw user input string.
+     * @return A Command object corresponding to the input.
+     * @throws InvalidCommandException If the input cannot be parsed as a valid command.
+     */
     public static Command parse(String input) throws MintelException {
         String[] inputList = input.split(" ");
 
