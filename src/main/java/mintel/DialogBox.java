@@ -61,10 +61,28 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    /**
+     * Factory method to create a dialog box representing a user's message.
+     * This creates a dialog box with the user's avatar on the right side
+     * and the specified text message.
+     *
+     * @param text The message text to display in the dialog box
+     * @param img The user's avatar image to display
+     * @return A DialogBox instance configured for user messages
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Factory method to create a dialog box representing Mintel's response.
+     * This creates a dialog box with Mintel's avatar on the left side
+     * and flips the layout to distinguish it from user messages.
+     *
+     * @param text Mintel's response text to display in the dialog box
+     * @param img Mintel's avatar image to display
+     * @return A DialogBox instance configured for Mintel responses with flipped layout
+     */
     public static DialogBox getMintelDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();

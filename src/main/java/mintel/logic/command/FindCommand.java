@@ -41,11 +41,12 @@ public class FindCommand extends Command {
             throw new EmptyDescriptionException("find");
         }
 
-        String keyword = input.substring(5);
-        String filteredTasks = tasks.getFilteredTasks(keyword);
+        String keywordsString = input.substring(5).trim();
+        String[] keywords = keywordsString.split("\\s+");
+        String filteredTasks = tasks.getFilteredTasks(keywords);
 
         if(filteredTasks.isEmpty()) {
-            return "There is no tasks that contains the keyword \'" + keyword +  "\'!";
+            return "There is no tasks that contains the keyword \'" + keywordsString +  "\'!";
         } else {
             return "Here are the matching tasks in your list:\n" + filteredTasks;
         }

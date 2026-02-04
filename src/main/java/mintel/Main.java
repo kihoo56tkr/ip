@@ -15,7 +15,17 @@ public class Main extends Application {
 
     private Mintel mintel = new Mintel("./data/list_of_task.txt");
 
-    @Override
+    /**
+     * The main entry point for all JavaFX applications.
+     * This method is called after the JavaFX runtime has been initialized.
+     *
+     * @param stage The primary stage for this application, onto which
+     *              the application scene can be set. The primary stage
+     *              is provided by the JavaFX platform.
+     * @throws IOException If the FXML file cannot be loaded
+     * @see FXMLLoader
+     * @see Scene
+     */    @Override
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));

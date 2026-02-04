@@ -128,20 +128,37 @@ public class TaskList {
     }
 
     /**
-     * Returns a formatted string representation of all filtered tasks that contains keyword.
+     * Returns a formatted string representation of all filtered tasks that contains all the keyword(s).
      *
-     * @param keyword String of the keyword to filter the tasks.
-     * @return Formatted string of all filtered tasks, or "" if empty.
+     * @param keywords One or more keywords to filter the tasks.
+     * @return Formatted string of all filtered tasks, or empty string if none found.
      */
-    public String getFilteredTasks(String keyword) {
-        StringBuilder sb = new StringBuilder("");
+    public String getFilteredTasks(String... keywords) {
+        if (keywords.length == 0) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
         int counter = 1;
+
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getName().contains(keyword)) {
-                sb.append(counter + "." + tasks.get(i) + "\n");
-                counter += 1;
+            Task task = tasks.get(i);
+            String taskName = task.getName();
+
+            boolean containsAllKeywords = true;
+            for (String keyword : keywords) {
+                if (!taskName.toLowerCase().contains(keyword.toLowerCase())) {
+                    containsAllKeywords = false;
+                    break;
+                }
+            }
+
+            if (containsAllKeywords) {
+                sb.append(counter).append(".").append(task).append("\n");
+                counter++;
             }
         }
+
         return sb.toString().trim();
     }
 }
