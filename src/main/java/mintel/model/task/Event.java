@@ -1,6 +1,5 @@
 package mintel.model.task;
 
-import mintel.exception.MintelException;
 import mintel.exception.InvalidDateFormatException;
 import mintel.exception.DateLogicException;
 

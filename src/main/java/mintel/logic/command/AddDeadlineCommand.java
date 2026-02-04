@@ -1,7 +1,6 @@
 package mintel.logic.command;
 
 import mintel.exception.EmptyDescriptionException;
-import mintel.exception.InvalidCommandException;
 import mintel.exception.MissingParameterException;
 import mintel.model.task.Deadline;
 import mintel.model.tasklist.TaskList;

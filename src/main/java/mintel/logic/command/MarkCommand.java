@@ -5,7 +5,6 @@ import mintel.model.tasklist.TaskList;
 import mintel.ui.Ui;
 import mintel.storage.Storage;
 import mintel.exception.MintelException;
-import mintel.exception.EmptyDescriptionException;
 
 import java.io.IOException;
 
@@ -14,17 +13,17 @@ import java.io.IOException;
  */
 public class MarkCommand extends Command {
     private String[] inputList;
-    private boolean isMark;
+    private boolean isMarkAsCompleted;
 
     /**
      * Constructs a MarkCommand command with the given description.
      *
      * @param inputList List of strings which contains the command given by the user but split by " ".
-     * @param isMark  Status of the task.
+     * @param isMarkAsCompleted Status of the task.
      */
-    public MarkCommand(String[] inputList, boolean isMark) {
+    public MarkCommand(String[] inputList, boolean isMarkAsCompleted) {
         this.inputList = inputList;
-        this.isMark = isMark;
+        this.isMarkAsCompleted = isMarkAsCompleted;
     }
 
     /**
@@ -39,15 +38,15 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
         if (inputList.length <= 1) {
-            throw new EmptyDescriptionException(isMark ? "mark" : "unmark");
+            throw new EmptyDescriptionException(isMarkAsCompleted ? "mark" : "unmark");
         }
 
         try {
             int index = Integer.parseInt(inputList[1]) - 1;
-            tasks.markTask(index, isMark);
+            tasks.markTask(index, isMarkAsCompleted);
             storage.saveTasks(tasks.getAllTasks());
 
-            String message = isMark ?
+            String message = isMarkAsCompleted ?
                     "Nice! I've marked this task as done:\n  " :
                     "OK, I've marked this task as not done yet:\n  ";
             ui.showMessage(message + tasks.get(index));

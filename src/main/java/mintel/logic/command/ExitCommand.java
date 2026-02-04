@@ -3,10 +3,6 @@ package mintel.logic.command;
 import mintel.model.tasklist.TaskList;
 import mintel.ui.Ui;
 import mintel.storage.Storage;
-import mintel.exception.EmptyDescriptionException;
-import mintel.exception.MintelException;
-
-import java.io.IOException;
 
 /**
  * ExitCommand in the Mintel application.
