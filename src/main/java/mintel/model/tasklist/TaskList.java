@@ -6,7 +6,6 @@ import java.util.List;
 import mintel.model.task.Task;
 import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;
-import mintel.exception.EmptyDescriptionException;
 
 /**
  * Manages a collection of tasks.
@@ -138,7 +137,7 @@ public class TaskList {
         StringBuilder sb = new StringBuilder("");
         int counter = 1;
         for (int i = 0; i < tasks.size(); i++) {
-            if(tasks.get(i).getName().contains(keyword)) {
+            if (tasks.get(i).getName().contains(keyword)) {
                 sb.append(counter + "." + tasks.get(i) + "\n");
                 counter += 1;
             }

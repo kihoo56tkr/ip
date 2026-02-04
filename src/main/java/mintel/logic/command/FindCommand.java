@@ -2,7 +2,6 @@ package mintel.logic.command;
 
 import java.io.IOException;
 
-import mintel.model.task.Task;
 import mintel.model.tasklist.TaskList;
 import mintel.ui.Ui;
 import mintel.storage.Storage;
