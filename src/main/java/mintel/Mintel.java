@@ -106,6 +106,32 @@ public class Mintel {
     }
 
     /**
+     * Generates a response to user input for GUI integration.
+     * This method processes a single command and returns the response as a String.
+     *
+     * @param input The user's command input
+     * @return Mintel's response to the command
+     */
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            String response = command.execute(tasks, ui, storage);
+            isExit = command.isExit();
+
+            if (isExit) {
+                return response + "\n(The window will close automatically after 3 seconds)";
+            }
+            return response;
+        } catch (MintelException | java.io.IOException e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    public boolean isExit() {
+        return this.isExit;
+    }
+
+    /**
      * The entry point of the Mintel application.
      *
      * @param args Command line arguments (not used).
