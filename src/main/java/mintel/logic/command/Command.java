@@ -22,8 +22,8 @@ public abstract class Command {
      * @throws MintelException If there's an error during command execution.
      * @throws IOException If there's an error saving tasks to file.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException;
-
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage)
+            throws MintelException, IOException;
     /**
      * Returns whether this command causes the application to exit.
      *

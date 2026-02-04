@@ -1,3 +1,11 @@
-T | 0 | homweork
-D | 0 | bbh | Jan 08 2028
-T | 0 | hello world
+T | 1 | hello world
+T | 0 | homework
+T | 0 | home
+T | 0 | 1
+T | 0 | 2
+T | 0 | homework
+T | 0 | 8
+T | 0 | wash
+T | 0 | homework
+T | 0 | homework
+D | 0 | up | Feb 20 2026

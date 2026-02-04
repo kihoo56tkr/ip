@@ -36,7 +36,7 @@ public class FindCommand extends Command {
      * @throws IOException If there's an error saving tasks to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
         if (inputList.length <= 1) {
             throw new EmptyDescriptionException("find");
         }
@@ -45,10 +45,9 @@ public class FindCommand extends Command {
         String filteredTasks = tasks.getFilteredTasks(keyword);
 
         if(filteredTasks.isEmpty()) {
-            ui.showMessage("There is no tasks that contains the keyword \'" + keyword +  "\'!");
+            return "There is no tasks that contains the keyword \'" + keyword +  "\'!";
         } else {
-            ui.showMessage("Here are the matching tasks in your list:");
-            ui.showMessage(filteredTasks);
+            return "Here are the matching tasks in your list:\n" + filteredTasks;
         }
     }
 

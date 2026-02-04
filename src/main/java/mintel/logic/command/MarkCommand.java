@@ -36,7 +36,7 @@ public class MarkCommand extends Command {
      * @throws IOException If there's an error saving tasks to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
         if (inputList.length <= 1) {
             throw new EmptyDescriptionException(isMarkAsCompleted ? "mark" : "unmark");
         }
@@ -49,7 +49,7 @@ public class MarkCommand extends Command {
             String message = isMarkAsCompleted ?
                     "Nice! I've marked this task as done:\n  " :
                     "OK, I've marked this task as not done yet:\n  ";
-            ui.showMessage(message + tasks.get(index));
+            return message + tasks.get(index);
         } catch (NumberFormatException e) {
             throw new MintelException("Please provide a valid task number!");
         }

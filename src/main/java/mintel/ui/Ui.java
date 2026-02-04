@@ -65,8 +65,12 @@ public class Ui {
      *
      * @param message The message to display to the user.
      */
-    public void showMessage(String message) {
-        System.out.println(message);
+    public String showMessage(String message) {
+        return message;  // Return instead of print
+    }
+
+    public String getErrorMessage(String error) {
+        return "Error: " + error;
     }
 
     /**

@@ -35,7 +35,7 @@ public class AddDeadlineCommand extends Command {
      * @throws IOException If there's an error saving tasks to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws MintelException, java.io.IOException {
 
         if (input.length() <= 9) {
@@ -64,8 +64,8 @@ public class AddDeadlineCommand extends Command {
         tasks.add(deadline);
         storage.saveTasks(tasks.getAllTasks());
 
-        ui.showMessage("Got it. I've added this task:\n  " + deadline +
-                "\nNow you have " + tasks.size() + " tasks in the list.");
+        return "Got it. I've added this task:\n  " + deadline +
+                "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**

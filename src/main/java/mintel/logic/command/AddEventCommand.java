@@ -35,7 +35,7 @@ public class AddEventCommand extends Command {
      * @throws IOException If there's an error saving tasks to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws MintelException, java.io.IOException {
 
         if (input.length() <= 6) {
@@ -75,8 +75,8 @@ public class AddEventCommand extends Command {
         tasks.add(event);
         storage.saveTasks(tasks.getAllTasks());
 
-        ui.showMessage("Got it. I've added this task:\n  " + event +
-                "\nNow you have " + tasks.size() + " tasks in the list.");
+        return "Got it. I've added this task:\n  " + event +
+                "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     @Override

@@ -34,7 +34,7 @@ public class DeleteCommand extends Command {
      * @throws IOException If there's an error saving tasks to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, Ui ui, Storage storage)
             throws MintelException, java.io.IOException {
 
         if (inputList.length <= 1) {
@@ -46,8 +46,8 @@ public class DeleteCommand extends Command {
             Task deletedTask = tasks.remove(index);
             storage.saveTasks(tasks.getAllTasks());
 
-            ui.showMessage("Noted. I've removed this task:\n  " + deletedTask +
-                    "\nNow you have " + tasks.size() + " tasks in the list.");
+            return "Noted. I've removed this task:\n  " + deletedTask +
+                    "\nNow you have " + tasks.size() + " tasks in the list.";
         } catch (NumberFormatException e) {
             throw new MintelException("Please provide a valid task number!");
         }
