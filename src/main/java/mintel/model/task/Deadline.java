@@ -59,6 +59,15 @@ public class Deadline extends Task {
     }
 
     /**
+     * Returns a ByDate of deadline for view schedule.
+     *
+     * @return LocalDate byDate.
+     */
+    public LocalDate getByDate() {
+        return this.byDate;
+    }
+
+    /**
      * Returns a string representation of the deadline for display.
      * Format: [D][status] description (by: formatted date)
      *

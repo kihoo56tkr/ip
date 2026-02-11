@@ -1,5 +1,7 @@
 package mintel.model.tasklist;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +9,8 @@ import java.util.stream.Stream;
 
 import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;
+import mintel.model.task.Deadline;
+import mintel.model.task.Event;
 import mintel.model.task.Task;
 
 /**
@@ -227,5 +231,63 @@ public class TaskList {
         }
 
         return sb.toString().trim();
+    }
+
+    /**
+     * Returns a formatted schedule of all deadlines and events occurring on a specific date.
+     *
+     * @param date Target date in yyyy-MM-dd format (e.g., "2026-03-15").
+     * @return Formatted schedule string.
+     */
+    public String getScheduleByDate(String date) {
+        assert date != null : "Date cannot be null";
+        assert !date.trim().isEmpty() : "Date cannot be empty";
+
+        LocalDate targetDate;
+        try {
+            targetDate = LocalDate.parse(date);
+        } catch (DateTimeParseException e) {
+            return "Invalid date format! Please use yyyy-MM-dd (e.g., 2026-03-15).";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Schedule for ").append(date).append(":\n");
+
+        int count = 0;
+
+        for (Task task : this.tasks) {
+            if (task instanceof Deadline) {
+                Deadline deadline = (Deadline) task;
+                if (deadline.getByDate().equals(targetDate)) {
+                    count++;
+                    sb.append(count).append(". ").append(deadline.toString()).append("\n");
+                }
+            } else if (task instanceof Event) {
+                Event event = (Event) task;
+                if (isDateInRange(targetDate, event.getFromDate(), event.getToDate())) {
+                    count++;
+                    sb.append(count).append(". ").append(event.toString()).append("\n");
+                }
+            }
+        }
+
+        if (count == 0) {
+            return "No deadlines or events scheduled on " + date + ".";
+        }
+
+        return sb.toString().trim();
+    }
+
+    /**
+     * Checks if a target date falls within an event's date range (inclusive).
+     *
+     * @param target The date to check.
+     * @param from   The event start date.
+     * @param to     The event end date.
+     * @return true if target is between from and to (inclusive).
+     */
+    private boolean isDateInRange(LocalDate target, LocalDate from, LocalDate to) {
+        return (target.isEqual(from) || target.isAfter(from)) &&
+                (target.isEqual(to) || target.isBefore(to));
     }
 }

@@ -40,6 +40,13 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Parses a date string in either "MMM dd yyyy" or "yyyy-MM-dd" format.
+     *
+     * @param dateStr Date string to parse (e.g., "Mar 15 2026" or "2026-03-15")
+     * @return LocalDate object representing the parsed date
+     * @throws InvalidDateFormatException if the date format is not supported
+     */
     private LocalDate parseDate(String dateStr) throws InvalidDateFormatException {
         DateTimeFormatter mmmFormatter = new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
@@ -57,6 +64,24 @@ public class Event extends Task {
                 throw new InvalidDateFormatException("");
             }
         }
+    }
+
+    /**
+     * Returns from date of event for view schedule.
+     *
+     * @return LocalDate from.
+     */
+    public LocalDate getFromDate() {
+        return this.from;
+    }
+
+    /**
+     * Returns to date of event for view schedule.
+     *
+     * @return LocalDate to.
+     */
+    public LocalDate getToDate() {
+        return this.to;
     }
 
     /**
