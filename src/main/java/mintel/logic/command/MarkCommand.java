@@ -25,8 +25,8 @@ public class MarkCommand extends Command {
         assert inputList != null : "Input list cannot be null";
         assert inputList.length > 0 : "Input list should contain command";
         assert inputList[0] != null : "Command word should not be null";
-        assert inputList[0].equals("mark") || inputList[0].equals("unmark") :
-                "MarkCommand should only handle mark/unmark: " + inputList[0];
+        assert inputList[0].equals("mark") || inputList[0].equals("unmark")
+                : "MarkCommand should only handle mark/unmark: " + inputList[0];
 
         this.inputList = inputList;
         this.isMarkAsCompleted = isMarkAsCompleted;
@@ -36,7 +36,8 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Executes the command with the given task list, UI, and storage by marking/unmarking the target Task with the index in the input.
+     * Executes the command with the given task list, UI, and storage by marking/unmarking the
+     * target Task with the index in the input.
      *
      * @param tasks   The task list to operate on.
      * @param ui      The user interface for displaying messages.
