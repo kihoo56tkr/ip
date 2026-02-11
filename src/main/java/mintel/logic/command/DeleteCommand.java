@@ -21,7 +21,14 @@ public class DeleteCommand extends Command {
      * @param inputList List of strings which contains the command given by the user but split by " ".
      */
     public DeleteCommand(String[] inputList) {
+        assert inputList != null : "Input list cannot be null";
+        assert inputList.length > 0 : "Input list should contain command";
+        assert inputList[0] != null : "Command word should not be null";
+        assert inputList[0].equals("delete"): "DeleteCommand should only handle delete: ";
+
         this.inputList = inputList;
+
+        assert this.inputList == inputList : "Input list not stored correctly";
     }
 
     /**
@@ -34,16 +41,21 @@ public class DeleteCommand extends Command {
      * @throws IOException If there's an error saving tasks to file.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage)
-            throws MintelException, java.io.IOException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
 
-        if (inputList.length <= 1) {
+        if (this.inputList.length <= 1) {
             throw new EmptyDescriptionException("delete");
         }
 
         try {
-            int index = Integer.parseInt(inputList[1]) - 1;
+            int index = Integer.parseInt(this.inputList[1]) - 1;
+
             Task deletedTask = tasks.remove(index);
+            assert deletedTask != null: "Deleted Task cannot be null";
+
             storage.saveTasks(tasks.getAllTasks());
 
             return "Noted. I've removed this task:\n  " + deletedTask +

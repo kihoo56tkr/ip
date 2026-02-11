@@ -20,7 +20,12 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
+        assert tasks != null : "ArrayList creation failed";
+        assert tasks.isEmpty() : "New TaskList should be empty";
+
         this.taskCount = 0;
+        assert taskCount == 0 : "New TaskList count should be 0";
+        assert taskCount == tasks.size() : "Count should match list size";
     }
 
     /**
@@ -29,8 +34,15 @@ public class TaskList {
      * @param tasks Initial list of tasks.
      */
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "Initial task list cannot be null";
+
         this.tasks = tasks;
+        assert this.tasks != null : "ArrayList copy creation failed";
+        assert this.tasks.size() == tasks.size() : "Copy size mismatch";
+
         this.taskCount = tasks.size();
+        assert taskCount >= 0 : "Task count cannot be negative";
+        assert taskCount == this.tasks.size() : "Count should match list size";
     }
 
     /**
@@ -39,8 +51,14 @@ public class TaskList {
      * @param task The task to add.
      */
     public void add(Task task) {
+        assert task != null : "Cannot add null task";
+
         tasks.add(task);
         taskCount++;
+
+        assert tasks.contains(task) : "Added task not found in list";
+        assert taskCount == tasks.size() : "Count should match list size";
+        assert tasks.get(tasks.size() - 1) == task : "Task not at expected position";
     }
 
     /**
@@ -51,11 +69,16 @@ public class TaskList {
      * @throws OutOfRangeException If the index is out of bounds.
      */
     public Task remove(int index) throws MintelException {
+        assert taskCount == tasks.size() : "Count mismatch before removal";
+
         if (index < 0 || index >= taskCount) {
             throw new OutOfRangeException();
         }
         Task removedTask = tasks.remove(index);
         taskCount--;
+
+        assert taskCount == tasks.size() : "Count should match list size after removal";
+
         return removedTask;
     }
 
@@ -67,6 +90,8 @@ public class TaskList {
      * @throws OutOfRangeException If the index is out of bounds.
      */
     public Task get(int index) throws MintelException {
+        assert taskCount == tasks.size() : "Count mismatch before get";
+
         if (index < 0 || index >= taskCount) {
             throw new OutOfRangeException();
         }
@@ -75,11 +100,15 @@ public class TaskList {
 
     public void markTask(int index, boolean isDone) throws MintelException {
         Task task = get(index);
+        assert task != null : "Task to mark should not be null";
+
         if (isDone) {
             task.markAsDone();
         } else {
             task.unmarkAsDone();
         }
+
+        assert task.getIsDone() == isDone : "Task marking failed: expected " + isDone + " but got " + task.getIsDone();
     }
 
     /**
@@ -88,7 +117,11 @@ public class TaskList {
      * @return The number of tasks.
      */
     public int size() {
-        return taskCount;
+        int size = taskCount;
+        assert size >= 0 : "Size cannot be negative: " + size;
+        assert size == tasks.size() : "Size mismatch: count=" + taskCount + ", list=" + tasks.size();
+
+        return size;
     }
 
     /**
@@ -97,7 +130,12 @@ public class TaskList {
      * @return true if the list is empty, false otherwise.
      */
     public boolean isEmpty() {
-        return tasks.isEmpty();
+        boolean empty = tasks.isEmpty();
+        boolean countZero = (taskCount == 0);
+
+        assert empty == countZero : "Empty state mismatch: list=" + empty + ", count=" + countZero;
+
+        return empty;
     }
 
     /**
@@ -117,13 +155,26 @@ public class TaskList {
      */
     public String getListString() {
         if (tasks.isEmpty()) {
+            assert taskCount == 0 : "Empty list but count > 0";
             return "Your list is empty!";
         }
 
+        assert taskCount > 0 : "Non-empty list but count == 0";
+        assert taskCount == tasks.size() : "Count mismatch in getListString";
+
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        int taskCounter = 0;
+
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append((i + 1) + "." + tasks.get(i) + "\n");
+            Task task = tasks.get(i);
+            assert task != null : "Task at index " + i + " is null";
+
+            sb.append((i + 1)).append(".").append(task).append("\n");
+            taskCounter++;
         }
+
+        assert taskCounter == tasks.size() : "Not all tasks processed: " + taskCounter + " vs " + tasks.size();
+
         return sb.toString().trim();
     }
 
@@ -134,6 +185,8 @@ public class TaskList {
      * @return Formatted string of all filtered tasks, or empty string if none found.
      */
     public String getFilteredTasks(String... keywords) {
+        assert keywords != null : "Keywords array cannot be null";
+
         if (keywords.length == 0) {
             return "";
         }
@@ -143,10 +196,15 @@ public class TaskList {
 
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
+            assert task != null : "Task at index " + i + " is null";
+
             String taskName = task.getName();
+            assert taskName != null : "Task name cannot be null";
+            assert !taskName.isEmpty() : "Task name cannot be empty";
 
             boolean containsAllKeywords = true;
             for (String keyword : keywords) {
+                assert keyword != null : "Keyword in loop cannot be null";
                 if (!taskName.toLowerCase().contains(keyword.toLowerCase())) {
                     containsAllKeywords = false;
                     break;

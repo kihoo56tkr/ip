@@ -29,6 +29,7 @@ public class Event extends Task {
      */
     public Event(String name, String from, String to) throws InvalidDateFormatException, DateLogicException {
         super(name);
+        assert name != null : "Event description cannot be null";
         this.from = parseDate(from.trim());
         this.to = parseDate(to.trim());
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy");

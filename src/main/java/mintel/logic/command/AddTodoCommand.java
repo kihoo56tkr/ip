@@ -21,7 +21,11 @@ public class AddTodoCommand extends Command {
      * @param input The command given by the user.
      */
     public AddTodoCommand(String input) {
+        assert input != null : "Input cannot be null";
+
         this.input = input;
+
+        assert this.input == input : "Input not stored correctly";
     }
 
     /**
@@ -35,17 +39,25 @@ public class AddTodoCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
-        if (input.length() <= 5) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+
+        if (this.input.length() <= 5) {
             throw new EmptyDescriptionException("todo");
         }
 
-        String description = input.substring(5).trim().stripLeading();
+        assert this.input.length() > 5: "Input length must be more than 5";
+
+        String description = this.input.substring(5).trim().stripLeading();
 
         if (description.isEmpty()) {
             throw new EmptyDescriptionException("todo");
         }
 
         Todo todo = new Todo(description);
+        assert todo != null: "todo cannot be null";
+
         tasks.add(todo);
         storage.saveTasks(tasks.getAllTasks());
 
