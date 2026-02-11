@@ -2,6 +2,8 @@ package mintel.model.tasklist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import mintel.model.task.Task;
 import mintel.exception.MintelException;
@@ -167,23 +169,11 @@ public class TaskList {
             return "Your list is empty!";
         }
 
-        assert this.taskCount > 0 : "Non-empty list but count == 0";
-        assert this.taskCount == this.tasks.size() : "Count mismatch in getListString";
-
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        int taskCounter = 0;
-
-        for (int i = 0; i < this.tasks.size(); i++) {
-            Task task = this.tasks.get(i);
-            assert task != null : "Task at index " + i + " is null";
-
-            sb.append((i + 1)).append(".").append(task).append("\n");
-            taskCounter++;
-        }
-
-        assert taskCounter == this.tasks.size() : "Not all tasks processed: " + taskCounter + " vs " + this.tasks.size();
-
-        return sb.toString().trim();
+        return Stream.iterate(0, i -> i + 1)
+                .limit(tasks.size())
+                .map(i -> (i + 1) + "." + tasks.get(i))
+                .collect(Collectors.joining("\n",
+                        "Here are the tasks in your list:\n", ""));
     }
 
     /**
