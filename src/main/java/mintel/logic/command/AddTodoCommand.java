@@ -14,6 +14,7 @@ import java.io.IOException;
  */
 public class AddTodoCommand extends Command {
     private String input;
+    private static final int TODO_MIN_LENGTH = 5;
 
     /**
      * Constructs a AddTodoCommand command with the given description.
@@ -43,13 +44,13 @@ public class AddTodoCommand extends Command {
         assert ui != null : "Ui cannot be null";
         assert storage != null : "Storage cannot be null";
 
-        if (this.input.length() <= 5) {
+        if (this.input.length() <= TODO_MIN_LENGTH) {
             throw new EmptyDescriptionException("todo");
         }
 
         assert this.input.length() > 5: "Input length must be more than 5";
 
-        String description = this.input.substring(5).trim().stripLeading();
+        String description = this.input.substring(TODO_MIN_LENGTH).trim().stripLeading();
 
         if (description.isEmpty()) {
             throw new EmptyDescriptionException("todo");

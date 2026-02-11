@@ -24,6 +24,7 @@ public class DialogBox extends HBox {
     private Label dialog;
     @FXML
     private ImageView displayPicture;
+    private static final int DIAMETER = 100;
 
     private DialogBox(String text, Image img) {
         assert text != null : "Dialog text cannot be null";
@@ -52,18 +53,14 @@ public class DialogBox extends HBox {
         }
 
         Circle clip = new Circle();
-        clip.setRadius(50);
-        clip.setCenterX(50);
-        clip.setCenterY(50);
-
-        assert clip.getRadius() == 50 : "Clip radius not set correctly";
-        assert clip.getCenterX() == 50 : "Clip center X not set correctly";
-        assert clip.getCenterY() == 50 : "Clip center Y not set correctly";
+        clip.setRadius(DIAMETER / 2);
+        clip.setCenterX(DIAMETER / 2);
+        clip.setCenterY(DIAMETER / 2);
 
         displayPicture.setImage(img);
         displayPicture.setClip(clip);
-        displayPicture.setFitWidth(100);
-        displayPicture.setFitHeight(100);
+        displayPicture.setFitWidth(DIAMETER);
+        displayPicture.setFitHeight(DIAMETER);
         displayPicture.setPreserveRatio(true);
 
         assert displayPicture.getImage() == img : "Image not set on displayPicture";

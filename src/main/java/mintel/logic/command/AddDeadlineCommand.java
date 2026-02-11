@@ -16,6 +16,9 @@ import java.io.IOException;
 public class AddDeadlineCommand extends Command {
     private String input;
 
+    private static final int DEADLINE_MIN_LENGTH = 9;
+    private static final int MIN_PARTS = 2;
+
     /**
      * Constructs a AddDeadlineCommand command with the given description.
      *
@@ -43,14 +46,14 @@ public class AddDeadlineCommand extends Command {
         assert storage != null : "Storage cannot be null";
         assert this.input != null : "Input should be initialized";
 
-        if (this.input.length() <= 9) {
+        if (this.input.length() <= DEADLINE_MIN_LENGTH) {
             throw new EmptyDescriptionException("deadline");
         }
 
-        String remaining = this.input.substring(9).trim();
-        String[] byParts = remaining.split("/by", 2);
+        String remaining = this.input.substring(DEADLINE_MIN_LENGTH).trim();
+        String[] byParts = remaining.split("/by", MIN_PARTS);
 
-        if (byParts.length < 2) {
+        if (byParts.length < MIN_PARTS) {
             throw new MissingParameterException("/by");
         }
 

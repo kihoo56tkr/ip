@@ -11,6 +11,10 @@ public abstract class Task {
     protected String name;
     protected boolean isDone;
 
+    private static final int TODO_EXPECTED_PARTS = 3;
+    private static final int DEADLINE_EXPECTED_PARTS = 4;
+    private static final int EVENT_EXPECTED_PARTS = 5;
+
     /**
      * Constructs a Task with the given description.
      * The task is initially not done.
@@ -123,7 +127,7 @@ public abstract class Task {
             parts[i] = parts[i].trim();
         }
 
-        if (parts.length < 3) {
+        if (parts.length < TODO_EXPECTED_PARTS) {
             throw new MintelException("Invalid task format in file: " + fileString);
         }
 
@@ -145,14 +149,14 @@ public abstract class Task {
             task = new Todo(description);
             break;
         case "D":
-            if (parts.length < 4) {
+            if (parts.length < DEADLINE_EXPECTED_PARTS) {
                 throw new MintelException("Invalid deadline format: " + fileString);
             }
             assert parts.length == 4 : "Deadline should have exactly 4 parts";
             task = new Deadline(description, parts[3]);
             break;
         case "E":
-            if (parts.length < 5) {
+            if (parts.length < EVENT_EXPECTED_PARTS) {
                 throw new MintelException("Invalid event format: " + fileString);
             }
             assert parts.length == 5 : "Event should have exactly 5 parts";

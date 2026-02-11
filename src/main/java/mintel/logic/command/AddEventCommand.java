@@ -15,6 +15,8 @@ import java.io.IOException;
  */
 public class AddEventCommand extends Command {
     private String input;
+    private static final int EVENT_MIN_LENGTH = 6;
+    private static final int MIN_PARTS = 2;
 
     /**
      * Constructs a AddEventCommand command with the given description.
@@ -46,26 +48,26 @@ public class AddEventCommand extends Command {
         assert storage != null : "Storage cannot be null";
         assert this.input != null : "Input should be initialized";
 
-        if (this.input.length() <= 6) {
+        if (this.input.length() <= EVENT_MIN_LENGTH) {
             throw new EmptyDescriptionException("event");
         }
 
-        String remaining = this.input.substring(6).trim();
-        String[] commandParts = remaining.split("/from", 2);
+        String remaining = this.input.substring(EVENT_MIN_LENGTH).trim();
+        String[] commandParts = remaining.split("/from", MIN_PARTS);
 
-        if (commandParts.length < 2) {
+        if (commandParts.length < MIN_PARTS) {
             throw new MissingParameterException("/from");
         }
 
         String name = commandParts[0].trim();
-        commandParts = commandParts[1].split("/to", 2);
+        String[] commandPartsRemaining = commandParts[1].split("/to", 2);
 
-        if (commandParts.length < 2) {
+        if (commandPartsRemaining.length < MIN_PARTS) {
             throw new MissingParameterException("/to");
         }
 
-        String from = commandParts[0].trim();
-        String to = commandParts[1].trim();
+        String from = commandPartsRemaining[0].trim();
+        String to = commandPartsRemaining[1].trim();
 
         if (name.isEmpty()) {
             throw new EmptyDescriptionException("event");
