@@ -16,6 +16,19 @@ import mintel.exception.MintelException;
 public class Storage {
     private String filePath;
 
+    private static final int TODO_EXPECTED_PARTS = 3;
+    private static final int TODO_EXPECTED_PIPE_COUNT = 2;
+
+    private static final int DEADLINE_EXPECTED_PARTS = 4;
+    private static final int DEADLINE_EXPECTED_PIPE_COUNT = 3;
+
+    private static final int EVENT_EXPECTED_PARTS = 5;
+    private static final int EVENT_EXPECTED_PIPE_COUNT = 4;
+
+    private static final String TASK_TYPE_TODO = "T";
+    private static final String TASK_TYPE_DEADLINE = "D";
+    private static final String TASK_TYPE_EVENT = "E";
+
     /**
      * Constructs a Storage instance with the specified file path.
      *
@@ -47,16 +60,16 @@ public class Storage {
                     parts[i] = parts[i].trim();
                 }
 
-                if (parts[0].equals("T")) {
-                    if (pipeCount != 2 || parts.length != 3) {
+                if (parts[0].equals(TASK_TYPE_TODO)) {
+                    if (pipeCount != TODO_EXPECTED_PIPE_COUNT || parts.length != TODO_EXPECTED_PARTS) {
                         return false;
                     }
-                } else if (parts[0].equals("D")) {
-                    if (pipeCount != 3 || parts.length != 4) {
+                } else if (parts[0].equals(TASK_TYPE_DEADLINE)) {
+                    if (pipeCount != DEADLINE_EXPECTED_PIPE_COUNT || parts.length != DEADLINE_EXPECTED_PARTS) {
                         return false;
                     }
-                } else if (parts[0].equals("E")) {
-                    if (pipeCount != 4 || parts.length != 5) {
+                } else if (parts[0].equals(TASK_TYPE_EVENT)) {
+                    if (pipeCount != EVENT_EXPECTED_PIPE_COUNT || parts.length != EVENT_EXPECTED_PARTS) {
                         return false;
                     }
                 } else {
@@ -86,11 +99,13 @@ public class Storage {
         try (java.util.Scanner scanner = new java.util.Scanner(taskFile)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                if (!line.isEmpty()) {
-                    Task task = parseTaskLine(line);
-                    if (task != null) {
-                        tasks.add(task);
-                    }
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                Task task = parseTaskLine(line);
+                if (task != null) {
+                    tasks.add(task);
                 }
             }
             return tasks;
