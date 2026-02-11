@@ -25,6 +25,9 @@ public class Mintel {
      * @param filePath The path to the file where tasks will be saved/loaded.
      */
     public Mintel(String filePath) {
+        assert filePath != null : "File path must not be null";
+        assert !filePath.trim().isEmpty() : "File path must not be empty";
+
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.isExit = false;
@@ -32,6 +35,9 @@ public class Mintel {
     }
 
     private void loadInitialTasks() {
+        assert ui != null : "UI must be initialized before loading tasks";
+        assert storage != null : "Storage must be initialized before loading tasks";
+
         String logo = "  /\\_/\\  \n" +
                 " ( o.o ) \n" +
                 "  > ^ <  \n" +
@@ -89,6 +95,10 @@ public class Mintel {
      * This is the main loop of the application.
      */
     public void run() {
+        assert tasks != null : "TaskList must be initialized before running";
+        assert ui != null : "UI must be initialized before running";
+        assert storage != null : "Storage must be initialized before running";
+
         while (!isExit) {
             try {
                 String input = ui.readCommand();
@@ -113,6 +123,11 @@ public class Mintel {
      * @return Mintel's response to the command
      */
     public String getResponse(String input) {
+        assert input != null : "Input to getResponse() cannot be null";
+        assert tasks != null : "TaskList must be initialized";
+        assert ui != null : "UI must be initialized";
+        assert storage != null : "Storage must be initialized";
+
         try {
             Command command = Parser.parse(input);
             String response = command.execute(tasks, ui, storage);

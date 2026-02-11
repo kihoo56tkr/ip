@@ -22,8 +22,16 @@ public class FindCommand extends Command {
      * @param input String of the input given by the user.
      */
     public FindCommand(String[] inputList, String input) {
+        assert inputList != null : "Input list cannot be null";
+        assert inputList.length > 0 : "Input list should contain command";
+        assert inputList[0] != null : "Command word should not be null";
+        assert inputList[0].equals("find"): "FindCommand should only handle find: ";
+
         this.inputList = inputList;
         this.input = input;
+
+        assert this.inputList == inputList : "Input list not stored correctly";
+        assert this.input == input : "Input not stored correctly";
     }
 
     /**
@@ -37,12 +45,21 @@ public class FindCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
-        if (inputList.length <= 1) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        assert this.inputList != null : "Input list should be initialized";
+
+        if (this.inputList.length <= 1) {
             throw new EmptyDescriptionException("find");
         }
 
-        String keywordsString = input.substring(5).trim();
+        String keywordsString = this.input.substring(5).trim();
+        assert keywordsString.length() >= 1: "KeywordsString cannot be empty";
+
         String[] keywords = keywordsString.split("\\s+");
+        assert keywords.length >= 1: "Keywords cannot be empty";
+
         String filteredTasks = tasks.getFilteredTasks(keywords);
 
         if(filteredTasks.isEmpty()) {
