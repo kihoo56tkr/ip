@@ -1,19 +1,19 @@
 package mintel.logic.command;
 
+import java.io.IOException;
+
+import mintel.exception.EmptyDescriptionException;
+import mintel.exception.MintelException;
 import mintel.model.task.Todo;
 import mintel.model.tasklist.TaskList;
-import mintel.ui.Ui;
 import mintel.storage.Storage;
-import mintel.exception.MintelException;
-import mintel.exception.EmptyDescriptionException;
-
-import java.io.IOException;
+import mintel.ui.Ui;
 
 /**
  * AddTodoCommand in the Mintel application.
  */
 public class AddTodoCommand extends Command {
-    private String input;
+    private final String input;
     private static final int TODO_MIN_LENGTH = 5;
 
     /**
@@ -32,11 +32,11 @@ public class AddTodoCommand extends Command {
     /**
      * Executes the command with the given task list, UI, and storage by adding a new Todo Task to the task list.
      *
-     * @param tasks The task list to operate on.
-     * @param ui The user interface for displaying messages.
+     * @param tasks   The task list to operate on.
+     * @param ui      The user interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      * @throws MintelException If there's an error during command execution.
-     * @throws IOException If there's an error saving tasks to file.
+     * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
@@ -48,7 +48,7 @@ public class AddTodoCommand extends Command {
             throw new EmptyDescriptionException("todo");
         }
 
-        assert this.input.length() > 5: "Input length must be more than 5";
+        assert this.input.length() > 5 : "Input length must be more than 5";
 
         String description = this.input.substring(TODO_MIN_LENGTH).trim().stripLeading();
 
@@ -57,7 +57,7 @@ public class AddTodoCommand extends Command {
         }
 
         Todo todo = new Todo(description);
-        assert todo != null: "todo cannot be null";
+        assert todo != null : "todo cannot be null";
 
         tasks.add(todo);
         storage.saveTasks(tasks.getAllTasks());

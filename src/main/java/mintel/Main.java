@@ -13,12 +13,13 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Mintel mintel = new Mintel("./data/list_of_task.txt");
+    private final Mintel mintel = new Mintel("./data/list_of_task.txt");
 
     {
         assert mintel != null : "Mintel instance failed to initialize";
         assert !mintel.isExit() : "Mintel should not start in exit state";
     }
+
     /**
      * The main entry point for all JavaFX applications.
      * This method is called after the JavaFX runtime has been initialized.
@@ -29,7 +30,8 @@ public class Main extends Application {
      * @throws IOException If the FXML file cannot be loaded
      * @see FXMLLoader
      * @see Scene
-     */    @Override
+     */
+    @Override
     public void start(Stage stage) {
         assert stage != null : "JavaFX stage cannot be null";
         assert mintel != null : "Mintel must be initialized before starting GUI";
@@ -47,7 +49,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            MainWindow controller = fxmlLoader.<MainWindow>getController();
+            MainWindow controller = fxmlLoader.getController();
             assert controller != null : "FXML controller not found";
 
             controller.setMintel(mintel);  // inject the Mintel instance
@@ -63,5 +65,3 @@ public class Main extends Application {
         }
     }
 }
-
-

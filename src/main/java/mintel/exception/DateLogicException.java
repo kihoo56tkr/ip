@@ -15,4 +15,3 @@ public class DateLogicException extends MintelException {
         super("The 'From' date should be before the 'To' date!");
     }
 }
-

@@ -1,12 +1,12 @@
 package mintel.model.task;
 
-import mintel.exception.InvalidDateFormatException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+
+import mintel.exception.InvalidDateFormatException;
 
 /**
  * Represents a deadline task that needs to be done before a specific date.
@@ -20,7 +20,7 @@ public class Deadline extends Task {
      * Constructs a Deadline task with description and due date.
      *
      * @param description The description of the deadline.
-     * @param by The due date string (yyyy-MM-dd or MMM d yyyy format).
+     * @param by          The due date string (yyyy-MM-dd or MMM d yyyy format).
      * @throws InvalidDateFormatException If the date format is invalid.
      */
     public Deadline(String description, String by) throws InvalidDateFormatException {

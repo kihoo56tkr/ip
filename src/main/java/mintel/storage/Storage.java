@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mintel.model.task.Task;
 import mintel.exception.MintelException;
+import mintel.model.task.Task;
 
 /**
  * Handles loading and saving of tasks to/from a file.
  * Manages file existence checks and format validation.
  */
 public class Storage {
-    private String filePath;
+    private final String filePath;
 
     private static final int TODO_EXPECTED_PARTS = 3;
     private static final int TODO_EXPECTED_PIPE_COUNT = 2;

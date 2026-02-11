@@ -1,13 +1,13 @@
 package mintel.model.task;
 
-import mintel.exception.InvalidDateFormatException;
-import mintel.exception.DateLogicException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+
+import mintel.exception.DateLogicException;
+import mintel.exception.InvalidDateFormatException;
 
 /**
  * Represents a event task that needs to be done before a specific date.
@@ -24,7 +24,7 @@ public class Event extends Task {
      *
      * @param name The description of the event.
      * @param from The starting date string (yyyy-MM-dd or MMM d yyyy format).
-     * @param to The ending date string (yyyy-MM-dd or MMM d yyyy format).
+     * @param to   The ending date string (yyyy-MM-dd or MMM d yyyy format).
      * @throws InvalidDateFormatException If the date format is invalid.
      */
     public Event(String name, String from, String to) throws InvalidDateFormatException, DateLogicException {
@@ -81,4 +81,3 @@ public class Event extends Task {
         return "E | " + super.getStatusIconFile() + " | " + super.name + " | From: " + this.displayFrom + " | To: " + this.displayTo;
     }
 }
-

@@ -108,7 +108,7 @@ public class DialogBox extends HBox {
      * and the specified text message.
      *
      * @param text The message text to display in the dialog box
-     * @param img The user's avatar image to display
+     * @param img  The user's avatar image to display
      * @return A DialogBox instance configured for user messages
      */
     public static DialogBox getUserDialog(String text, Image img) {
@@ -130,7 +130,7 @@ public class DialogBox extends HBox {
      * and flips the layout to distinguish it from user messages.
      *
      * @param text Mintel's response text to display in the dialog box
-     * @param img Mintel's avatar image to display
+     * @param img  Mintel's avatar image to display
      * @return A DialogBox instance configured for Mintel responses with flipped layout
      */
     public static DialogBox getMintelDialog(String text, Image img) {
@@ -149,4 +149,3 @@ public class DialogBox extends HBox {
         return db;
     }
 }
-
