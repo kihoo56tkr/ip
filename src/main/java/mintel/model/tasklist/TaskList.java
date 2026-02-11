@@ -287,7 +287,7 @@ public class TaskList {
      * @return true if target is between from and to (inclusive).
      */
     private boolean isDateInRange(LocalDate target, LocalDate from, LocalDate to) {
-        return (target.isEqual(from) || target.isAfter(from)) &&
-                (target.isEqual(to) || target.isBefore(to));
+        return (target.isEqual(from) || target.isAfter(from))
+                && (target.isEqual(to) || target.isBefore(to));
     }
 }
