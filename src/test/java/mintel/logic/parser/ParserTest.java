@@ -1,16 +1,19 @@
 // File: src/test/java/mintel/logic/parser/ParserTest.java
 package mintel.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import mintel.exception.InvalidCommandException;
+import mintel.exception.MintelException;
+import mintel.logic.command.AddTodoCommand;
 import mintel.logic.command.Command;
 import mintel.logic.command.ExitCommand;
 import mintel.logic.command.ListCommand;
-import mintel.logic.command.AddTodoCommand;
-import mintel.exception.MintelException;
-import mintel.exception.InvalidCommandException;
 
 public class ParserTest {
 

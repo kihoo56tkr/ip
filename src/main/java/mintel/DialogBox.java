@@ -20,11 +20,12 @@ import javafx.scene.shape.Circle;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    private static final int DIAMETER = 100;
+
     @FXML
     private Label dialog;
     @FXML
     private ImageView displayPicture;
-    private static final int DIAMETER = 100;
 
     private DialogBox(String text, Image img) {
         assert text != null : "Dialog text cannot be null";
@@ -35,8 +36,8 @@ public class DialogBox extends HBox {
 
         try {
             String fxmlPath = "/view/DialogBox.fxml";
-            assert MainWindow.class.getResource(fxmlPath) != null :
-                    "DialogBox FXML not found: " + fxmlPath;
+            assert MainWindow.class.getResource(fxmlPath) != null
+                    : "DialogBox FXML not found: " + fxmlPath;
 
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource(fxmlPath));
             assert fxmlLoader != null : "FXMLLoader creation failed";
@@ -118,8 +119,8 @@ public class DialogBox extends HBox {
         DialogBox db = new DialogBox(text, img);
 
         assert db != null : "User DialogBox creation failed";
-        assert db.getAlignment() == Pos.TOP_RIGHT || db.getAlignment() == null :
-                "User dialog should be right-aligned or default";
+        assert db.getAlignment() == Pos.TOP_RIGHT || db.getAlignment() == null
+                : "User dialog should be right-aligned or default";
 
         return db;
     }
@@ -143,8 +144,8 @@ public class DialogBox extends HBox {
         db.flip();
 
         assert db.getAlignment() == Pos.TOP_LEFT : "Mintel dialog should be left-aligned";
-        assert db.dialog.getStyleClass().contains("reply-label") :
-                "Mintel dialog missing reply style class";
+        assert db.dialog.getStyleClass().contains("reply-label")
+                : "Mintel dialog missing reply style class";
 
         return db;
     }

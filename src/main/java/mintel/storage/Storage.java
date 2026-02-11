@@ -14,20 +14,19 @@ import mintel.model.task.Task;
  * Manages file existence checks and format validation.
  */
 public class Storage {
-    private final String filePath;
-
+    private static final String TASK_TYPE_TODO = "T";
     private static final int TODO_EXPECTED_PARTS = 3;
     private static final int TODO_EXPECTED_PIPE_COUNT = 2;
 
+    private static final String TASK_TYPE_DEADLINE = "D";
     private static final int DEADLINE_EXPECTED_PARTS = 4;
     private static final int DEADLINE_EXPECTED_PIPE_COUNT = 3;
 
+    private static final String TASK_TYPE_EVENT = "E";
     private static final int EVENT_EXPECTED_PARTS = 5;
     private static final int EVENT_EXPECTED_PIPE_COUNT = 4;
 
-    private static final String TASK_TYPE_TODO = "T";
-    private static final String TASK_TYPE_DEADLINE = "D";
-    private static final String TASK_TYPE_EVENT = "E";
+    private final String filePath;
 
     /**
      * Constructs a Storage instance with the specified file path.
@@ -43,6 +42,11 @@ public class Storage {
         assert this.filePath.equals(filePath) : "File path not stored correctly";
     }
 
+    /**
+     * Checks if the storage file exists.
+     *
+     * @return true if file exists and is a regular file
+     */
     public boolean fileExists() {
         assert filePath != null : "File path must be initialized";
 
@@ -50,6 +54,12 @@ public class Storage {
         return file.exists() && file.isFile();
     }
 
+    /**
+     * Validates the format of the storage file.
+     * Checks each line against expected Todo/Deadline/Event formats.
+     *
+     * @return true if file format is correct or file doesn't exist
+     */
     public boolean isFileFormatCorrect() {
         assert filePath != null : "File path must be initialized";
 
@@ -179,6 +189,13 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Parses a single line from the storage file into a Task object.
+     *
+     * @param line Raw line from storage file
+     * @return Task object parsed from the line
+     * @throws MintelException if line format is invalid
+     */
     private Task parseTaskLine(String line) throws MintelException {
         assert line != null : "Line to parse cannot be null";
         assert !line.trim().isEmpty() : "Line to parse cannot be empty";

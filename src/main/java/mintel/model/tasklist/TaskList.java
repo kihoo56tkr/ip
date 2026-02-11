@@ -108,6 +108,17 @@ public class TaskList {
         return this.tasks.get(index);
     }
 
+    /**
+     * Marks or unmarks a task at the specified index as done/not done.
+     * Retrieves the task from the list and updates its completion status.
+     *
+     * @param index  The zero-based index of the task to mark/unmark.
+     * @param isDone {@code true} to mark the task as done,
+     *               {@code false} to mark it as not done.
+     * @throws MintelException If the index is out of bounds or the task cannot be accessed.
+     * @throws AssertionError  If assertions are enabled and the task is null after retrieval,
+     *                         or if the task's completion status does not match the expected value.
+     */
     public void markTask(int index, boolean isDone) throws MintelException {
         Task task = get(index);
         assert task != null : "Task to mark should not be null";

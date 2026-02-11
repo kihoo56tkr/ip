@@ -52,7 +52,7 @@ public class Main extends Application {
             MainWindow controller = fxmlLoader.getController();
             assert controller != null : "FXML controller not found";
 
-            controller.setMintel(mintel);  // inject the Mintel instance
+            controller.setMintel(mintel); // inject the Mintel instance
 
             stage.show();
 

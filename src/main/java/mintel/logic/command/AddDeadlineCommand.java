@@ -14,10 +14,10 @@ import mintel.ui.Ui;
  * AddDeadlineCommand in the Mintel application.
  */
 public class AddDeadlineCommand extends Command {
-    private final String input;
-
     private static final int DEADLINE_MIN_LENGTH = 9;
     private static final int MIN_PARTS = 2;
+
+    private final String input;
 
     /**
      * Constructs a AddDeadlineCommand command with the given description.
@@ -79,8 +79,8 @@ public class AddDeadlineCommand extends Command {
 
         storage.saveTasks(tasks.getAllTasks());
 
-        return "Got it. I've added this task:\n  " + deadline +
-                "\nNow you have " + tasks.size() + " tasks in the list.";
+        return "Got it. I've added this task:\n  " + deadline
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**

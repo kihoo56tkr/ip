@@ -29,6 +29,10 @@ public class MainWindow extends AnchorPane {
     private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private final Image mintelImage = new Image(this.getClass().getResourceAsStream("/images/Mintel.png"));
 
+    /**
+     * Initializes the JavaFX controller.
+     * Verifies FXML injection, loads images, binds scroll pane, and shows welcome message.
+     */
     @FXML
     public void initialize() {
         assert scrollPane != null : "ScrollPane FXML injection failed";
