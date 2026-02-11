@@ -14,7 +14,6 @@ import java.io.IOException;
  */
 public class AddTodoCommand extends Command {
     private String input;
-    private static final int TODO_MIN_LENGTH = 5;
 
     /**
      * Constructs a AddTodoCommand command with the given description.
@@ -36,11 +35,11 @@ public class AddTodoCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
-        if (this.input.length() <= TODO_MIN_LENGTH) {
+        if (input.length() <= 5) {
             throw new EmptyDescriptionException("todo");
         }
 
-        String description = this.input.substring(TODO_MIN_LENGTH).trim().stripLeading();
+        String description = input.substring(5).trim().stripLeading();
 
         if (description.isEmpty()) {
             throw new EmptyDescriptionException("todo");
