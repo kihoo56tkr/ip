@@ -15,8 +15,6 @@ import java.io.IOException;
  */
 public class AddDeadlineCommand extends Command {
     private String input;
-    private static final int DEADLINE_MIN_LENGTH = 9;
-    private static final int MIN_PARTS = 2;
 
     /**
      * Constructs a AddDeadlineCommand command with the given description.
@@ -40,14 +38,14 @@ public class AddDeadlineCommand extends Command {
     public String execute(TaskList tasks, Ui ui, Storage storage)
             throws MintelException, java.io.IOException {
 
-        if (input.length() <= DEADLINE_MIN_LENGTH) {
+        if (input.length() <= 9) {
             throw new EmptyDescriptionException("deadline");
         }
 
-        String remaining = input.substring(DEADLINE_MIN_LENGTH).trim();
-        String[] byParts = remaining.split("/by", MIN_PARTS);
+        String remaining = input.substring(9).trim();
+        String[] byParts = remaining.split("/by", 2);
 
-        if (byParts.length < MIN_PARTS) {
+        if (byParts.length < 2) {
             throw new MissingParameterException("/by");
         }
 

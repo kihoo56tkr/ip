@@ -39,8 +39,8 @@ public class TaskList {
      * @param task The task to add.
      */
     public void add(Task task) {
-        this.tasks.add(task);
-        this.taskCount++;
+        tasks.add(task);
+        taskCount++;
     }
 
     /**
@@ -51,15 +51,11 @@ public class TaskList {
      * @throws OutOfRangeException If the index is out of bounds.
      */
     public Task remove(int index) throws MintelException {
-        boolean isIndexNegative = index < 0;
-        boolean isIndexInTaskList = index >= this.taskCount;
-        boolean isIndexValid = isIndexNegative || isIndexInTaskList;
-
-        if (isIndexValid) {
+        if (index < 0 || index >= taskCount) {
             throw new OutOfRangeException();
         }
-        Task removedTask = this.tasks.remove(index);
-        this.taskCount--;
+        Task removedTask = tasks.remove(index);
+        taskCount--;
         return removedTask;
     }
 
@@ -71,14 +67,10 @@ public class TaskList {
      * @throws OutOfRangeException If the index is out of bounds.
      */
     public Task get(int index) throws MintelException {
-        boolean isIndexNegative = index < 0;
-        boolean isIndexInTaskList = index >= this.taskCount;
-        boolean isIndexValid = isIndexNegative || isIndexInTaskList;
-
-        if (isIndexValid) {
+        if (index < 0 || index >= taskCount) {
             throw new OutOfRangeException();
         }
-        return this.tasks.get(index);
+        return tasks.get(index);
     }
 
     public void markTask(int index, boolean isDone) throws MintelException {
@@ -96,7 +88,7 @@ public class TaskList {
      * @return The number of tasks.
      */
     public int size() {
-        return this.taskCount;
+        return taskCount;
     }
 
     /**
@@ -105,7 +97,7 @@ public class TaskList {
      * @return true if the list is empty, false otherwise.
      */
     public boolean isEmpty() {
-        return this.tasks.isEmpty();
+        return tasks.isEmpty();
     }
 
     /**
@@ -114,7 +106,7 @@ public class TaskList {
      * @return A list containing all tasks.
      */
     public List<Task> getAllTasks() {
-        return this.tasks;
+        return tasks;
     }
 
     /**
@@ -124,13 +116,13 @@ public class TaskList {
      * @return Formatted string of all tasks, or "Your list is empty!" if empty.
      */
     public String getListString() {
-        if (this.tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             return "Your list is empty!";
         }
 
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        for (int i = 0; i < this.tasks.size(); i++) {
-            sb.append((i + 1) + "." + this.tasks.get(i) + "\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append((i + 1) + "." + tasks.get(i) + "\n");
         }
         return sb.toString().trim();
     }
@@ -149,8 +141,8 @@ public class TaskList {
         StringBuilder sb = new StringBuilder();
         int counter = 1;
 
-        for (int i = 0; i < this.tasks.size(); i++) {
-            Task task = this.tasks.get(i);
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
             String taskName = task.getName();
 
             boolean containsAllKeywords = true;

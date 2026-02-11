@@ -24,7 +24,6 @@ public class DialogBox extends HBox {
     private Label dialog;
     @FXML
     private ImageView displayPicture;
-    private static final int DIAMETER = 100;
 
     private DialogBox(String text, Image img) {
         try {
@@ -37,14 +36,14 @@ public class DialogBox extends HBox {
         }
 
         Circle clip = new Circle();
-        clip.setRadius(DIAMETER / 2);
-        clip.setCenterX(DIAMETER / 2);
-        clip.setCenterY(DIAMETER / 2);
+        clip.setRadius(50);  // Adjust radius as needed
+        clip.setCenterX(50); // Half of diameter
+        clip.setCenterY(50); // Half of diameter
 
         displayPicture.setImage(img);
-        displayPicture.setClip(clip);
-        displayPicture.setFitWidth(DIAMETER);
-        displayPicture.setFitHeight(DIAMETER);
+        displayPicture.setClip(clip);  // Apply circular clipping
+        displayPicture.setFitWidth(100);  // Match clip diameter
+        displayPicture.setFitHeight(100); // Match clip diameter
         displayPicture.setPreserveRatio(true);
 
         dialog.setText(text);
