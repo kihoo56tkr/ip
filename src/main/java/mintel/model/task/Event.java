@@ -78,6 +78,7 @@ public class Event extends Task {
      */
     @Override
     public String toStringFile() {
-        return "E | " + super.getStatusIconFile() + " | " + super.name + " | From: " + this.displayFrom + " | To: " + this.displayTo;
+        return "E | " + super.getStatusIconFile() + " | " + super.name + " | From: "
+                + this.displayFrom + " | To: " + this.displayTo;
     }
 }

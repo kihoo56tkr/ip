@@ -38,10 +38,10 @@ public class Mintel {
         assert ui != null : "UI must be initialized before loading tasks";
         assert storage != null : "Storage must be initialized before loading tasks";
 
-        String logo = "  /\\_/\\  \n" +
-                " ( o.o ) \n" +
-                "  > ^ <  \n" +
-                " MINTEL";
+        String logo = "  /\\_/\\  \n"
+                + " ( o.o ) \n"
+                + "  > ^ <  \n"
+                + " MINTEL";
         ui.showWelcome(logo);
 
         ui.showMessage("Doing some prechecks...");
@@ -86,7 +86,8 @@ public class Mintel {
             ui.showMessage("Please change the file to the correct format or rename the file before trying again!");
         } else {
             isExit = true;
-            ui.showMessage("That is an invalid command! Please change the file to the correct format or rename the file before trying again!");
+            ui.showMessage("That is an invalid command! Please change the file to the correct format or"
+                    + "rename the file before trying again!");
         }
     }
 

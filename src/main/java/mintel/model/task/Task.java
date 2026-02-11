@@ -8,12 +8,12 @@ import mintel.exception.MintelException;
  * Subclasses implement specific task types (Todo, Deadline, Event).
  */
 public abstract class Task {
-    protected String name;
-    protected boolean isDone;
-
-    private static final int TODO_EXPECTED_PARTS = 3;
     private static final int DEADLINE_EXPECTED_PARTS = 4;
     private static final int EVENT_EXPECTED_PARTS = 5;
+    private static final int TODO_EXPECTED_PARTS = 3;
+
+    protected String name;
+    protected boolean isDone;
 
     /**
      * Constructs a Task with the given description.

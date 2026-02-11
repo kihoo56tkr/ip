@@ -14,9 +14,10 @@ import mintel.ui.Ui;
  * AddEventCommand in the Mintel application.
  */
 public class AddEventCommand extends Command {
-    private final String input;
     private static final int EVENT_MIN_LENGTH = 6;
     private static final int MIN_PARTS = 2;
+
+    private final String input;
 
     /**
      * Constructs a AddEventCommand command with the given description.
@@ -92,8 +93,8 @@ public class AddEventCommand extends Command {
 
         storage.saveTasks(tasks.getAllTasks());
 
-        return "Got it. I've added this task:\n  " + event +
-                "\nNow you have " + tasks.size() + " tasks in the list.";
+        return "Got it. I've added this task:\n  " + event
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     @Override

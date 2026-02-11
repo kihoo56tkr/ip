@@ -32,7 +32,8 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Executes the command with the given task list, UI, and storage by deleting the target Task with the index in the input.
+     * Executes the command with the given task list, UI, and storage by deleting the target
+     * Task with the index in the input.
      *
      * @param tasks   The task list to operate on.
      * @param ui      The user interface for displaying messages.
@@ -58,8 +59,8 @@ public class DeleteCommand extends Command {
 
             storage.saveTasks(tasks.getAllTasks());
 
-            return "Noted. I've removed this task:\n  " + deletedTask +
-                    "\nNow you have " + tasks.size() + " tasks in the list.";
+            return "Noted. I've removed this task:\n  " + deletedTask
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
         } catch (NumberFormatException e) {
             throw new MintelException("Please provide a valid task number!");
         }

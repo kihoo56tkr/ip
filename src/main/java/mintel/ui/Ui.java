@@ -46,9 +46,9 @@ public class Ui {
      */
     public void showWelcome(String logo) {
         System.out.println("Hello from\n" + logo);
-        System.out.println("____________________________________________________________\n" +
-                "Hello! I'm MIntel\n" +
-                "____________________________________________________________");
+        System.out.println("____________________________________________________________\n"
+                + "Hello! I'm MIntel\n"
+                + "____________________________________________________________");
     }
 
     /**
@@ -66,7 +66,7 @@ public class Ui {
      * @param message The message to display to the user.
      */
     public String showMessage(String message) {
-        return message;  // Return instead of print
+        return message;
     }
 
     public String getErrorMessage(String error) {

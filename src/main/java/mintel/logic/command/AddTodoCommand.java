@@ -13,8 +13,9 @@ import mintel.ui.Ui;
  * AddTodoCommand in the Mintel application.
  */
 public class AddTodoCommand extends Command {
-    private final String input;
     private static final int TODO_MIN_LENGTH = 5;
+
+    private final String input;
 
     /**
      * Constructs a AddTodoCommand command with the given description.
@@ -62,8 +63,8 @@ public class AddTodoCommand extends Command {
         tasks.add(todo);
         storage.saveTasks(tasks.getAllTasks());
 
-        return "Got it. I've added this task:\n  " + todo +
-                "\nNow you have " + tasks.size() + " tasks in the list.";
+        return "Got it. I've added this task:\n  " + todo
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     @Override
