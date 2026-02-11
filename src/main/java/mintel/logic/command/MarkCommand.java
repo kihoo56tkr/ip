@@ -1,24 +1,24 @@
 package mintel.logic.command;
 
-import mintel.exception.EmptyDescriptionException;
-import mintel.model.tasklist.TaskList;
-import mintel.ui.Ui;
-import mintel.storage.Storage;
-import mintel.exception.MintelException;
-
 import java.io.IOException;
+
+import mintel.exception.EmptyDescriptionException;
+import mintel.exception.MintelException;
+import mintel.model.tasklist.TaskList;
+import mintel.storage.Storage;
+import mintel.ui.Ui;
 
 /**
  * MarkCommand in the Mintel application.
  */
 public class MarkCommand extends Command {
-    private String[] inputList;
-    private boolean isMarkAsCompleted;
+    private final String[] inputList;
+    private final boolean isMarkAsCompleted;
 
     /**
      * Constructs a MarkCommand command with the given description.
      *
-     * @param inputList List of strings which contains the command given by the user but split by " ".
+     * @param inputList         List of strings which contains the command given by the user but split by " ".
      * @param isMarkAsCompleted Status of the task.
      */
     public MarkCommand(String[] inputList, boolean isMarkAsCompleted) {
@@ -37,11 +37,11 @@ public class MarkCommand extends Command {
     /**
      * Executes the command with the given task list, UI, and storage by marking/unmarking the target Task with the index in the input.
      *
-     * @param tasks The task list to operate on.
-     * @param ui The user interface for displaying messages.
+     * @param tasks   The task list to operate on.
+     * @param ui      The user interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      * @throws MintelException If there's an error during command execution.
-     * @throws IOException If there's an error saving tasks to file.
+     * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {

@@ -1,7 +1,7 @@
 package mintel.ui;
 
-import java.util.Scanner;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 /**
  * Handles all user interface interactions for the Mintel chatbot.
@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * reading user input, and managing the console interface.
  */
 public class Ui {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     /**
      * Constructs a new Ui instance with a Scanner for reading user input.

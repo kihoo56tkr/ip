@@ -1,11 +1,11 @@
 package mintel;
 
-import mintel.ui.Ui;
-import mintel.storage.Storage;
-import mintel.model.tasklist.TaskList;
-import mintel.logic.parser.Parser;
-import mintel.logic.command.Command;
 import mintel.exception.MintelException;
+import mintel.logic.command.Command;
+import mintel.logic.parser.Parser;
+import mintel.model.tasklist.TaskList;
+import mintel.storage.Storage;
+import mintel.ui.Ui;
 
 /**
  * Main class for the Mintel chatbot application.
@@ -13,9 +13,9 @@ import mintel.exception.MintelException;
  * It supports saving tasks to file and loading them on startup.
  */
 public class Mintel {
-    private Storage storage;
+    private final Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private final Ui ui;
     private boolean isExit;
 
 

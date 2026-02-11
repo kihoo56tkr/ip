@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import mintel.model.task.Task;
 import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;
+import mintel.model.task.Task;
 
 /**
  * Manages a collection of tasks.
  * Provides operations to add, remove, mark, and retrieve tasks.
  */
 public class TaskList {
-    private List<Task> tasks;
+    private final List<Task> tasks;
     private int taskCount;
 
     /**

@@ -1,20 +1,20 @@
 package mintel.logic.command;
 
+import java.io.IOException;
+
+import mintel.exception.EmptyDescriptionException;
+import mintel.exception.MintelException;
 import mintel.exception.MissingParameterException;
 import mintel.model.task.Event;
 import mintel.model.tasklist.TaskList;
-import mintel.ui.Ui;
 import mintel.storage.Storage;
-import mintel.exception.MintelException;
-import mintel.exception.EmptyDescriptionException;
-
-import java.io.IOException;
+import mintel.ui.Ui;
 
 /**
  * AddEventCommand in the Mintel application.
  */
 public class AddEventCommand extends Command {
-    private String input;
+    private final String input;
     private static final int EVENT_MIN_LENGTH = 6;
     private static final int MIN_PARTS = 2;
 
@@ -34,11 +34,11 @@ public class AddEventCommand extends Command {
     /**
      * Executes the command with the given task list, UI, and storage by adding a new Event Task to the task list.
      *
-     * @param tasks The task list to operate on.
-     * @param ui The user interface for displaying messages.
+     * @param tasks   The task list to operate on.
+     * @param ui      The user interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      * @throws MintelException If there's an error during command execution.
-     * @throws IOException If there's an error saving tasks to file.
+     * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage)

@@ -1,19 +1,19 @@
 package mintel.logic.command;
 
+import java.io.IOException;
+
+import mintel.exception.EmptyDescriptionException;
+import mintel.exception.MintelException;
 import mintel.model.task.Task;
 import mintel.model.tasklist.TaskList;
-import mintel.ui.Ui;
 import mintel.storage.Storage;
-import mintel.exception.MintelException;
-import mintel.exception.EmptyDescriptionException;
-
-import java.io.IOException;
+import mintel.ui.Ui;
 
 /**
  * DeleteCommand in the Mintel application.
  */
 public class DeleteCommand extends Command {
-    private String[] inputList;
+    private final String[] inputList;
 
     /**
      * Constructs a DeleteCommand command with the given description.
@@ -24,7 +24,7 @@ public class DeleteCommand extends Command {
         assert inputList != null : "Input list cannot be null";
         assert inputList.length > 0 : "Input list should contain command";
         assert inputList[0] != null : "Command word should not be null";
-        assert inputList[0].equals("delete"): "DeleteCommand should only handle delete: ";
+        assert inputList[0].equals("delete") : "DeleteCommand should only handle delete: ";
 
         this.inputList = inputList;
 
@@ -34,11 +34,11 @@ public class DeleteCommand extends Command {
     /**
      * Executes the command with the given task list, UI, and storage by deleting the target Task with the index in the input.
      *
-     * @param tasks The task list to operate on.
-     * @param ui The user interface for displaying messages.
+     * @param tasks   The task list to operate on.
+     * @param ui      The user interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      * @throws MintelException If there's an error during command execution.
-     * @throws IOException If there's an error saving tasks to file.
+     * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
@@ -54,7 +54,7 @@ public class DeleteCommand extends Command {
             int index = Integer.parseInt(this.inputList[1]) - 1;
 
             Task deletedTask = tasks.remove(index);
-            assert deletedTask != null: "Deleted Task cannot be null";
+            assert deletedTask != null : "Deleted Task cannot be null";
 
             storage.saveTasks(tasks.getAllTasks());
 

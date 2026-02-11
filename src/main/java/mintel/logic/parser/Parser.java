@@ -1,16 +1,16 @@
 package mintel.logic.parser;
 
+import mintel.exception.InvalidCommandException;
+import mintel.exception.MintelException;
+import mintel.logic.command.AddDeadlineCommand;
+import mintel.logic.command.AddEventCommand;
+import mintel.logic.command.AddTodoCommand;
 import mintel.logic.command.Command;
+import mintel.logic.command.DeleteCommand;
 import mintel.logic.command.ExitCommand;
 import mintel.logic.command.FindCommand;
 import mintel.logic.command.ListCommand;
-import mintel.logic.command.AddTodoCommand;
-import mintel.logic.command.AddDeadlineCommand;
-import mintel.logic.command.AddEventCommand;
 import mintel.logic.command.MarkCommand;
-import mintel.logic.command.DeleteCommand;
-import mintel.exception.MintelException;
-import mintel.exception.InvalidCommandException;
 
 /**
  * Parses user input strings into Command objects.
@@ -26,9 +26,6 @@ public class Parser {
      * @throws InvalidCommandException If the input cannot be parsed as a valid command.
      */
     public static Command parse(String input) throws MintelException {
-        assert input != null : "Parser input cannot be null";
-        assert !input.trim().isEmpty() : "Parser input cannot be empty or whitespace";
-
         String[] inputList = input.split(" ");
         assert inputList.length > 0 : "Input split resulted in empty array";
         assert inputList[0] != null : "First word of command should not be null";

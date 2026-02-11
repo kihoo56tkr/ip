@@ -26,8 +26,8 @@ public class MainWindow extends AnchorPane {
 
     private Mintel mintel;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image mintelImage = new Image(this.getClass().getResourceAsStream("/images/Mintel.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private final Image mintelImage = new Image(this.getClass().getResourceAsStream("/images/Mintel.png"));
 
     @FXML
     public void initialize() {
@@ -45,10 +45,12 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    /** Injects the Mintel instance */
+    /**
+     * Injects the Mintel instance
+     */
     public void setMintel(Mintel m) {
         assert m != null : "Cannot inject null Mintel instance";
-        assert m.isExit() == false : "Mintel should not be in exit state when injected";
+        assert !m.isExit() : "Mintel should not be in exit state when injected";
 
         mintel = m;
     }
