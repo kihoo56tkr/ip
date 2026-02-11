@@ -26,7 +26,12 @@ public class Parser {
      * @throws InvalidCommandException If the input cannot be parsed as a valid command.
      */
     public static Command parse(String input) throws MintelException {
+        assert input != null : "Parser input cannot be null";
+        assert !input.trim().isEmpty() : "Parser input cannot be empty or whitespace";
+
         String[] inputList = input.split(" ");
+        assert inputList.length > 0 : "Input split resulted in empty array";
+        assert inputList[0] != null : "First word of command should not be null";
 
         if (input.equals("list")) {
             return new ListCommand();

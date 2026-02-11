@@ -26,39 +26,83 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
 
     private DialogBox(String text, Image img) {
+        assert text != null : "Dialog text cannot be null";
+        assert img != null : "Dialog image cannot be null";
+        assert !text.trim().isEmpty() : "Dialog text cannot be empty or whitespace";
+        assert img.getWidth() > 0 : "Image must have positive width";
+        assert img.getHeight() > 0 : "Image must have positive height";
+
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            String fxmlPath = "/view/DialogBox.fxml";
+            assert MainWindow.class.getResource(fxmlPath) != null :
+                    "DialogBox FXML not found: " + fxmlPath;
+
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource(fxmlPath));
+            assert fxmlLoader != null : "FXMLLoader creation failed";
+
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
+
+            assert dialog != null : "FXML: 'dialog' Label not injected";
+            assert displayPicture != null : "FXML: 'displayPicture' ImageView not injected";
         } catch (IOException e) {
             e.printStackTrace();
+            assert false : "Failed to load DialogBox FXML: " + e.getMessage();
         }
 
         Circle clip = new Circle();
-        clip.setRadius(50);  // Adjust radius as needed
-        clip.setCenterX(50); // Half of diameter
-        clip.setCenterY(50); // Half of diameter
+        clip.setRadius(50);
+        clip.setCenterX(50);
+        clip.setCenterY(50);
+
+        assert clip.getRadius() == 50 : "Clip radius not set correctly";
+        assert clip.getCenterX() == 50 : "Clip center X not set correctly";
+        assert clip.getCenterY() == 50 : "Clip center Y not set correctly";
 
         displayPicture.setImage(img);
-        displayPicture.setClip(clip);  // Apply circular clipping
-        displayPicture.setFitWidth(100);  // Match clip diameter
-        displayPicture.setFitHeight(100); // Match clip diameter
+        displayPicture.setClip(clip);
+        displayPicture.setFitWidth(100);
+        displayPicture.setFitHeight(100);
         displayPicture.setPreserveRatio(true);
+
+        assert displayPicture.getImage() == img : "Image not set on displayPicture";
+        assert displayPicture.getClip() == clip : "Clip not applied to displayPicture";
+        assert displayPicture.getFitWidth() == 100 : "Fit width not set correctly";
+        assert displayPicture.getFitHeight() == 100 : "Fit height not set correctly";
+        assert displayPicture.isPreserveRatio() : "Preserve ratio should be true";
 
         dialog.setText(text);
         displayPicture.setImage(img);
+
+        assert dialog.getText().equals(text) : "Dialog text not set correctly";
+        assert !dialog.getText().isEmpty() : "Dialog text should not be empty";
     }
 
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        assert this.getChildren() != null : "Cannot flip empty HBox";
+        assert this.getChildren().size() == 2 : "Must have exactly 2 children to flip";
+
+        ObservableList<Node> original = this.getChildren();
+        ObservableList<Node> tmp = FXCollections.observableArrayList(original);
+        assert tmp.size() == 2 : "Temporary list should have 2 elements";
+
         Collections.reverse(tmp);
+
+        assert !tmp.equals(original) : "Reversal didn't change order";
+        assert tmp.get(0) == original.get(1) : "First element not swapped correctly";
+        assert tmp.get(1) == original.get(0) : "Second element not swapped correctly";
+
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+
+        assert this.getAlignment() == Pos.TOP_LEFT : "Alignment not set to TOP_LEFT";
+
         dialog.getStyleClass().add("reply-label");
+        assert dialog.getStyleClass().contains("reply-label") : "Reply style class not added to dialog";
     }
 
     /**
@@ -71,7 +115,16 @@ public class DialogBox extends HBox {
      * @return A DialogBox instance configured for user messages
      */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        assert text != null : "User dialog text cannot be null";
+        assert img != null : "User dialog image cannot be null";
+
+        DialogBox db = new DialogBox(text, img);
+
+        assert db != null : "User DialogBox creation failed";
+        assert db.getAlignment() == Pos.TOP_RIGHT || db.getAlignment() == null :
+                "User dialog should be right-aligned or default";
+
+        return db;
     }
 
     /**
@@ -84,8 +137,18 @@ public class DialogBox extends HBox {
      * @return A DialogBox instance configured for Mintel responses with flipped layout
      */
     public static DialogBox getMintelDialog(String text, Image img) {
+        assert text != null : "Mintel dialog text cannot be null";
+        assert img != null : "Mintel dialog image cannot be null";
+
         var db = new DialogBox(text, img);
+        assert db != null : "Mintel DialogBox creation failed";
+
         db.flip();
+
+        assert db.getAlignment() == Pos.TOP_LEFT : "Mintel dialog should be left-aligned";
+        assert db.dialog.getStyleClass().contains("reply-label") :
+                "Mintel dialog missing reply style class";
+
         return db;
     }
 }

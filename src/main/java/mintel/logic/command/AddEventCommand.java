@@ -22,7 +22,11 @@ public class AddEventCommand extends Command {
      * @param input The command given by the user.
      */
     public AddEventCommand(String input) {
+        assert input != null : "Event command input cannot be null";
+        assert input.startsWith("event") : "AddEventCommand should start with 'event': " + input;
+
         this.input = input;
+        assert this.input.equals(input) : "Input not stored correctly";
     }
 
     /**
@@ -37,12 +41,16 @@ public class AddEventCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage)
             throws MintelException, java.io.IOException {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        assert this.input != null : "Input should be initialized";
 
-        if (input.length() <= 6) {
+        if (this.input.length() <= 6) {
             throw new EmptyDescriptionException("event");
         }
 
-        String remaining = input.substring(6).trim();
+        String remaining = this.input.substring(6).trim();
         String[] commandParts = remaining.split("/from", 2);
 
         if (commandParts.length < 2) {
@@ -72,7 +80,14 @@ public class AddEventCommand extends Command {
         }
 
         Event event = new Event(name, from, to);
+
+        assert event != null : "Event creation failed";
+        assert event.getName().equals(name) : "Event name not set correctly";
+        assert !event.getIsDone() : "New event should not be marked done";
+
         tasks.add(event);
+        assert tasks.get(tasks.size() - 1) == event : "Event not at end of list";
+
         storage.saveTasks(tasks.getAllTasks());
 
         return "Got it. I've added this task:\n  " + event +

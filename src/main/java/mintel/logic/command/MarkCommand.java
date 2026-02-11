@@ -22,8 +22,16 @@ public class MarkCommand extends Command {
      * @param isMarkAsCompleted Status of the task.
      */
     public MarkCommand(String[] inputList, boolean isMarkAsCompleted) {
+        assert inputList != null : "Input list cannot be null";
+        assert inputList.length > 0 : "Input list should contain command";
+        assert inputList[0] != null : "Command word should not be null";
+        assert inputList[0].equals("mark") || inputList[0].equals("unmark") : "MarkCommand should only handle mark/unmark: " + inputList[0];
+
         this.inputList = inputList;
         this.isMarkAsCompleted = isMarkAsCompleted;
+
+        assert this.inputList == inputList : "Input list not stored correctly";
+        assert this.isMarkAsCompleted == isMarkAsCompleted : "Status flag not stored correctly";
     }
 
     /**
@@ -37,7 +45,12 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
-        if (inputList.length <= 1) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        assert this.inputList != null : "Input list should be initialized";
+
+        if (this.inputList.length <= 1) {
             throw new EmptyDescriptionException(isMarkAsCompleted ? "mark" : "unmark");
         }
 
@@ -49,7 +62,14 @@ public class MarkCommand extends Command {
             String message = isMarkAsCompleted ?
                     "Nice! I've marked this task as done:\n  " :
                     "OK, I've marked this task as not done yet:\n  ";
-            return message + tasks.get(index);
+
+            String result = message + tasks.get(index);
+
+            assert result != null : "Result message should not be null";
+            assert !result.trim().isEmpty() : "Result message should not be empty";
+            assert result.contains("\n") : "Result should contain newline";
+
+            return result;
         } catch (NumberFormatException e) {
             throw new MintelException("Please provide a valid task number!");
         }

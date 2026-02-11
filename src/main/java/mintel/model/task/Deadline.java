@@ -25,6 +25,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) throws InvalidDateFormatException {
         super(description);
+        assert description != null : "Deadline description cannot be null";
         this.byDate = parseDate(by.trim());
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         this.displayBy = this.byDate.format(displayFormatter);

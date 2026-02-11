@@ -17,6 +17,7 @@ public class Todo extends Task {
      */
     public Todo(String name) {
         super(name);
+        assert name != null : "Todo description cannot be null";
     }
 
     /**
@@ -38,7 +39,10 @@ public class Todo extends Task {
      */
     @Override
     public String toStringFile() {
-        return "T | " + super.getStatusIconFile() + " | " + super.name;
+        String result = "T | " + this.getStatusIconFile() + " | " + super.name;
+        assert result.startsWith("T | ") : "Todo file format incorrect";
+        assert result.contains(" | ") : "Todo file format missing delimiter";
+        return result;
     }
 }
 

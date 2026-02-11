@@ -38,11 +38,16 @@ public class AddDeadlineCommand extends Command {
     public String execute(TaskList tasks, Ui ui, Storage storage)
             throws MintelException, java.io.IOException {
 
-        if (input.length() <= 9) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        assert this.input != null : "Input should be initialized";
+
+        if (this.input.length() <= 9) {
             throw new EmptyDescriptionException("deadline");
         }
 
-        String remaining = input.substring(9).trim();
+        String remaining = this.input.substring(9).trim();
         String[] byParts = remaining.split("/by", 2);
 
         if (byParts.length < 2) {
@@ -61,7 +66,14 @@ public class AddDeadlineCommand extends Command {
         }
 
         Deadline deadline = new Deadline(name, by);
+
+        assert deadline != null : "Deadline creation failed";
+        assert deadline.getName().equals(name) : "Deadline name not set correctly";
+        assert !deadline.getIsDone() : "New deadline should not be marked done";
+
         tasks.add(deadline);
+        assert tasks.get(tasks.size() - 1) == deadline : "Event not at end of list";
+
         storage.saveTasks(tasks.getAllTasks());
 
         return "Got it. I've added this task:\n  " + deadline +

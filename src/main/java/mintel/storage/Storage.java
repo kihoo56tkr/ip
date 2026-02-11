@@ -22,16 +22,26 @@ public class Storage {
      * @param filePath The path to the task storage file.
      */
     public Storage(String filePath) {
+        assert filePath != null : "Storage file path cannot be null";
+        assert !filePath.trim().isEmpty() : "Storage file path cannot be empty";
+        assert filePath.endsWith(".txt") : "Storage file should be a .txt file: " + filePath;
+
         this.filePath = filePath;
+        assert this.filePath.equals(filePath) : "File path not stored correctly";
     }
 
     public boolean fileExists() {
+        assert filePath != null : "File path must be initialized";
+
         File file = new File(filePath);
         return file.exists() && file.isFile();
     }
 
     public boolean isFileFormatCorrect() {
+        assert filePath != null : "File path must be initialized";
+
         File taskFile = new File(filePath);
+        assert taskFile != null : "File object creation failed";
 
         try (java.util.Scanner scanner = new java.util.Scanner(taskFile)) {
             while (scanner.hasNextLine()) {
@@ -43,20 +53,26 @@ public class Storage {
                 String[] parts = line.split("\\|", -1);
                 int pipeCount = parts.length - 1;
 
+                assert parts.length > 0 : "Line split resulted in empty array";
+
                 for (int i = 0; i < parts.length; i++) {
                     parts[i] = parts[i].trim();
+                    assert parts[i] != null : "Trimmed part should not be null";
                 }
 
                 if (parts[0].equals("T")) {
                     if (pipeCount != 2 || parts.length != 3) {
+                        assert false : "Todo format invalid at line " + line;
                         return false;
                     }
                 } else if (parts[0].equals("D")) {
                     if (pipeCount != 3 || parts.length != 4) {
+                        assert false : "Deadline format invalid at line " + line;
                         return false;
                     }
                 } else if (parts[0].equals("E")) {
                     if (pipeCount != 4 || parts.length != 5) {
+                        assert false : "Event format invalid at line " + line;
                         return false;
                     }
                 } else {
@@ -65,6 +81,7 @@ public class Storage {
             }
             return true;
         } catch (java.io.FileNotFoundException e) {
+            assert false : "File not found despite existence check: " + filePath;
             return true;
         }
     }
@@ -76,17 +93,27 @@ public class Storage {
      * @throws MintelException If there's an error reading the file.
      */
     public ArrayList<Task> loadTasks() throws MintelException {
+        assert filePath != null : "File path must be initialized";
+
         ArrayList<Task> tasks = new ArrayList<>();
+        assert tasks != null : "Task list creation failed";
+
         File taskFile = new File(filePath);
+        assert taskFile != null : "File object creation failed";
 
         if (!taskFile.exists()) {
+            assert tasks.isEmpty() : "Task list should be empty for non-existent file";
             return tasks;
         }
+
+        assert taskFile.canRead() : "Cannot read task file: " + filePath;
+        assert taskFile.length() >= 0 : "File has negative length: " + filePath;
 
         try (java.util.Scanner scanner = new java.util.Scanner(taskFile)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (!line.isEmpty()) {
+                    assert !line.contains("\n") : "Line contains newline character";
                     Task task = parseTaskLine(line);
                     if (task != null) {
                         tasks.add(task);
@@ -95,6 +122,7 @@ public class Storage {
             }
             return tasks;
         } catch (java.io.FileNotFoundException e) {
+            assert false : "File disappeared between existence check and opening: " + filePath;
             throw new MintelException("Error loading tasks: " + e.getMessage());
         }
     }
@@ -106,19 +134,40 @@ public class Storage {
      * @throws IOException If there's an error writing to the file.
      */
     public void saveTasks(List<Task> tasks) throws IOException {
+        assert tasks != null : "Task list to save cannot be null";
+        assert filePath != null : "File path must be initialized";
+
         File dataDir = new File("./data");
+        assert dataDir != null : "Data directory object creation failed";
+
         if (!dataDir.exists()) {
-            dataDir.mkdirs();
+            boolean created = dataDir.mkdirs();
+            assert created : "Failed to create data directory: ./data";
+            assert dataDir.exists() : "Data directory still doesn't exist after creation";
+            assert dataDir.isDirectory() : "./data is not a directory";
         }
 
+        assert dataDir.canWrite() : "Cannot write to data directory";
+
         FileWriter fw = new FileWriter(filePath);
+        assert fw != null : "FileWriter creation failed";
+
         for (Task task : tasks) {
-            fw.write(task.toStringFile() + "\n");
+            String line = task.toStringFile();
+            assert line != null : "Task.toStringFile() returned null";
+            assert !line.isEmpty() : "Task.toStringFile() returned empty string";
+            assert line.contains("|") : "Task string should contain pipe delimiter: " + line;
+
+            fw.write(line + "\n");
         }
         fw.close();
     }
 
     private Task parseTaskLine(String line) throws MintelException {
+        assert line != null : "Line to parse cannot be null";
+        assert !line.trim().isEmpty() : "Line to parse cannot be empty";
+        assert line.contains("|") : "Line should contain pipe delimiter: " + line;
+
         return Task.fromFileString(line);
     }
 }
