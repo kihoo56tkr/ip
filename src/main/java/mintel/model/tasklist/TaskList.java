@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import mintel.exception.DataValidationException;
 import mintel.exception.InvalidDateFormatException;
 import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;
 import mintel.model.task.Deadline;
 import mintel.model.task.Event;
 import mintel.model.task.Task;
+import mintel.model.task.Todo;
 
 /**
  * Manages a collection of tasks.
@@ -53,12 +55,17 @@ public class TaskList {
     }
 
     /**
-     * Adds a task to the list.
+     * Adds a task with duplicate detection.
      *
      * @param task The task to add.
+     * @throws DataValidationException If a duplicate task is found.
      */
-    public void add(Task task) {
+    public void add(Task task) throws DataValidationException {
         assert task != null : "Cannot add null task";
+
+        if (isDuplicate(task)) {
+            throw new DataValidationException("");
+        }
 
         this.tasks.add(task);
         this.taskCount++;
@@ -66,6 +73,43 @@ public class TaskList {
         assert this.tasks.contains(task) : "Added task not found in list";
         assert this.taskCount == this.tasks.size() : "Count should match list size";
         assert this.tasks.get(this.tasks.size() - 1) == task : "Task not at expected position";
+    }
+
+    /**
+     * Checks if a task is a duplicate of an existing task.
+     * Two tasks are considered duplicates if they have:
+     * - Same type (Todo/Deadline/Event)
+     * - Same description
+     * - Same dates (if applicable)
+     */
+    private boolean isDuplicate(Task newTask) {
+        for (Task existingTask : tasks) {
+            if (existingTask.getClass() != newTask.getClass()) {
+                continue;
+            }
+
+            if (newTask instanceof Todo) {
+                if (existingTask.getName().equals(newTask.getName())) {
+                    return true;
+                }
+            } else if (newTask instanceof Deadline) {
+                Deadline existing = (Deadline) existingTask;
+                Deadline newDeadline = (Deadline) newTask;
+                if (existing.getName().equals(newDeadline.getName()) &&
+                        existing.getByDate().equals(newDeadline.getByDate())) {
+                    return true;
+                }
+            } else if (newTask instanceof Event) {
+                Event existing = (Event) existingTask;
+                Event newEvent = (Event) newTask;
+                if (existing.getName().equals(newEvent.getName()) &&
+                        existing.getFromDate().equals(newEvent.getFromDate()) &&
+                        existing.getToDate().equals(newEvent.getToDate())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

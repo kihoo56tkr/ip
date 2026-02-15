@@ -152,7 +152,7 @@ public abstract class Task {
         }
 
         if (parts.length < TODO_EXPECTED_PARTS) {
-            throw new MintelException("Invalid task format in file: " + fileString);
+            throw new MintelException("Invalid task format in file: " + fileString + "₍^◞ ˕ ◟^₎⟆");
         }
 
         assert parts.length >= 3 : "File string should have at least 3 parts: " + fileString;
@@ -184,7 +184,7 @@ public abstract class Task {
         case "E":
             return createEvent(description, parts);
         default:
-            throw new MintelException("Unknown task type in file: " + type);
+            throw new MintelException("Unknown task type in file! ₍^◞ ˕ ◟^₎⟆");
         }
     }
 
