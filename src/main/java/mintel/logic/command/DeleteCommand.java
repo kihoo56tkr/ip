@@ -60,10 +60,10 @@ public class DeleteCommand extends Command {
 
             storage.saveTasks(tasks.getAllTasks());
 
-            return "MEOWRiffic! ദ്ദി(• ⩊ •^ I've removed this task:\n  " + deletedTask
+            return "MEOWRiffic! I've removed this task:\n  " + deletedTask
                     + "\nNow you have " + tasks.size() + " tasks in the list.";
         } catch (NumberFormatException e) {
-            throw new MintelException("Please provide a valid task number! ₍^◞ ˕ ◟^₎⟆");
+            throw new MintelException("Please provide a valid task number! Meow...");
         }
     }
 

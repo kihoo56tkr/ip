@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mintel.exception.InvalidCommandException;
 
 /**
  * Controller for the main GUI.
@@ -80,38 +81,47 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         assert mintel != null : "Mintel instance must be set before handling input";
-        assert userInput != null : "User input field must be available";
-        assert dialogContainer != null : "Dialog container must be available";
 
         String input = userInput.getText();
-        assert input != null : "TextField.getText() should not return null";
+        try {
+            if (input == null || input.trim().isEmpty()) {
+                throw new InvalidCommandException();
+            }
 
-        String response = mintel.getResponse(input);
-        assert response != null : "Mintel.getResponse() should not return null";
+            input = input.trim();
+            String response = mintel.getResponse(input);
 
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getMintelDialog(response, mintelImage)
-        );
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getMintelDialog(response, mintelImage)
+            );
 
-        assert userImage != null : "User image must be loaded";
-        assert mintelImage != null : "Mintel image must be loaded";
+            userInput.clear();
 
-        userInput.clear();
+            if (input.equalsIgnoreCase("bye")) {
+                handleExit();
+            }
 
-        if (input.trim().equalsIgnoreCase("bye")) {
-            assert userInput.getScene() != null : "User input should be in a scene";
-            assert userInput.getScene().getWindow() != null : "Scene should have a window";
-
-            userInput.setDisable(true);
-            sendButton.setDisable(true);
-            PauseTransition delay = new PauseTransition(Duration.seconds(3));
-            delay.setOnFinished(event -> {
-                Stage stage = (Stage) userInput.getScene().getWindow();
-                assert stage != null : "Stage should not be null when closing";
-                stage.close();
-            });
-            delay.play();
+        } catch (InvalidCommandException e) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getMintelDialog(e.getMessage(), mintelImage)
+            );
+            userInput.clear();
         }
+    }
+
+    /**
+     * Disables input and closes the window after a 3-second delay.
+     */
+    private void handleExit() {
+        userInput.setDisable(true);
+        sendButton.setDisable(true);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(event -> {
+            Stage stage = (Stage) userInput.getScene().getWindow();
+            stage.close();
+        });
+        delay.play();
     }
 }

@@ -26,7 +26,7 @@ Adds a simple task without any date.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ I've added this task:
+MEOWRiffic! I've added this task:
 [T][ ] read book
 Now you have 1 tasks in the list.
 ```
@@ -49,7 +49,7 @@ Adds a task that needs to be done by a specific date.
 **Expected outcome:**
 
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ I've added this task:
+MEOWRiffic! I've added this task:
 [D][ ] homework (by: Mar 15 2026)
 Now you have 2 tasks in the list.
 ```
@@ -65,7 +65,7 @@ Adds an event with a start and end date.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ I've added this task:
+MEOWRiffic! I've added this task:
 [E][ ] team meeting (from: Mar 15 2026 to: Mar 16 2026)
 Now you have 3 tasks in the list.
 ```
@@ -80,7 +80,7 @@ Shows all todos, deadlines, and events in your list.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ Here are the tasks in your list:
+MEOWRiffic! Here are the tasks in your list:
 1.[T][ ] read book
 2.[D][ ] homework (by: Mar 15 2026)
 3.[E][ ] team meeting (from: Mar 15 2026 to: Mar 16 2026)
@@ -114,7 +114,7 @@ Shows all deadlines and events scheduled on a specific date.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ Schedule for 2026-03-15:
+MEOWRiffic! Schedule for 2026-03-15:
 1. [D][] homework (by: 2026-03-15)
 2. [E][] team meeting (2026-03-15 to 2026-03-16)
 ```
@@ -131,7 +131,7 @@ Marks a task as done.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ I've marked this task as done:
+MEOWRiffic! I've marked this task as done:
 [D][X] homework (by: Mar 15 2026)
 ```
 ---
@@ -146,7 +146,7 @@ Marks a task as not done.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ I've marked this task as not done yet:
+MEOWRiffic! I've marked this task as not done yet:
 [D][] homework (by: Mar 15 2026)
 ```
 
@@ -162,7 +162,7 @@ Removes a task from your list.
 
 **Expected outcome:**
 ```
-MEOWRiffic! ദ്ദി(• ⩊ •^ I've removed this task::
+MEOWRiffic! I've removed this task::
 [E][ ] team meeting (from: Mar 15 2026 to: Mar 16 2026)
 Now you have 2 tasks in the list.
 ```

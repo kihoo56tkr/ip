@@ -12,6 +12,6 @@ public class DataValidationException extends MintelException {
      * @param message The detail message explaining the data error.
      */
     public DataValidationException(String message) {
-        super("A task with identical details already exists! ₍^◞ ˕ ◟^₎⟆");
+        super("A task with identical details already exists! Meow...");
     }
 }

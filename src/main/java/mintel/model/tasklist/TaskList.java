@@ -233,7 +233,7 @@ public class TaskList {
                 .limit(tasks.size())
                 .map(i -> (i + 1) + "." + tasks.get(i))
                 .collect(Collectors.joining("\n",
-                        "MEOWRiffic! ദ്ദി(• ⩊ •^ Here are the tasks in your list:\n", ""));
+                        "MEOWRiffic! Here are the tasks in your list:\n", ""));
     }
 
     /**
@@ -296,7 +296,7 @@ public class TaskList {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("MEOWRiffic! ദ്ദി(• ⩊ •^ Schedule for ").append(date).append(":\n");
+        sb.append("MEOWRiffic! Schedule for ").append(date).append(":\n");
 
         int count = 0;
 
