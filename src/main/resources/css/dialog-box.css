@@ -1,6 +1,14 @@
-.label {
+.user-dialog {
     -fx-background-color: #FDEFB2;
     -fx-border-color: #DFC98A;
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+}
+
+.mintel-dialog {
+    -fx-background-color: #FFADA9;
+    -fx-text-fill: #390200;
     -fx-border-width: 2px;
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;

@@ -127,6 +127,7 @@ public class DialogBox extends HBox {
         assert img != null : "User dialog image cannot be null";
 
         DialogBox db = new DialogBox(text, img);
+        db.dialog.getStyleClass().add("user-dialog");
 
         assert db != null : "User DialogBox creation failed";
         assert db.getAlignment() == Pos.TOP_RIGHT || db.getAlignment() == null
@@ -152,6 +153,7 @@ public class DialogBox extends HBox {
         assert db != null : "Mintel DialogBox creation failed";
 
         db.flip();
+        db.dialog.getStyleClass().add("mintel-dialog");
 
         assert db.getAlignment() == Pos.TOP_LEFT : "Mintel dialog should be left-aligned";
         assert db.dialog.getStyleClass().contains("reply-label")
