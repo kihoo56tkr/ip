@@ -1,8 +1,8 @@
 package mintel.logic.command;
 
+import mintel.MainWindow;
 import mintel.model.tasklist.TaskList;
 import mintel.storage.Storage;
-import mintel.ui.Ui;
 
 /**
  * ExitCommand in the Mintel application.
@@ -13,16 +13,16 @@ public class ExitCommand extends Command {
      * Exit the program.
      *
      * @param tasks   The task list to operate on.
-     * @param ui      The user interface for displaying messages.
+     * @param mainWindow      The window interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage) {
         assert tasks != null : "TaskList cannot be null";
-        assert ui != null : "Ui cannot be null";
+        assert mainWindow != null : "MainWindow cannot be null";
         assert storage != null : "Storage cannot be null";
 
-        return "Meow Meow~ Bye! Hope to see you again soon!";
+        return "Meow Meow~ Bye! See you again soon!";
     }
 
     @Override

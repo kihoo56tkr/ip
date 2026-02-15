@@ -2,13 +2,13 @@ package mintel.logic.command;
 
 import java.io.IOException;
 
+import mintel.MainWindow;
 import mintel.exception.EmptyDescriptionException;
 import mintel.exception.MintelException;
 import mintel.exception.MissingParameterException;
 import mintel.model.task.Deadline;
 import mintel.model.tasklist.TaskList;
 import mintel.storage.Storage;
-import mintel.ui.Ui;
 
 /**
  * AddDeadlineCommand in the Mintel application.
@@ -32,17 +32,17 @@ public class AddDeadlineCommand extends Command {
      * Executes the command with the given task list, UI, and storage by adding a new Deadline Task to the task list.
      *
      * @param tasks   The task list to operate on.
-     * @param ui      The user interface for displaying messages.
+     * @param mainWindow      The user interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      * @throws MintelException If there's an error during command execution.
      * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage)
+    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage)
             throws MintelException, java.io.IOException {
 
         assert tasks != null : "TaskList cannot be null";
-        assert ui != null : "Ui cannot be null";
+        assert mainWindow != null : "MainWindow cannot be null";
         assert storage != null : "Storage cannot be null";
         assert this.input != null : "Input should be initialized";
 

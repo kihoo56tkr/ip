@@ -1,11 +1,12 @@
 package mintel;
 
+import java.util.List;
+
 import mintel.exception.MintelException;
 import mintel.logic.command.Command;
 import mintel.logic.parser.Parser;
 import mintel.model.tasklist.TaskList;
 import mintel.storage.Storage;
-import mintel.ui.Ui;
 
 /**
  * Main class for the Mintel chatbot application.
@@ -15,9 +16,8 @@ import mintel.ui.Ui;
 public class Mintel {
     private final Storage storage;
     private TaskList tasks;
-    private final Ui ui;
     private boolean isExit;
-
+    private MainWindow mainWindow;
 
     /**
      * Constructs a Mintel chatbot instance with the specified file path for data storage.
@@ -28,92 +28,40 @@ public class Mintel {
         assert filePath != null : "File path must not be null";
         assert !filePath.trim().isEmpty() : "File path must not be empty";
 
-        this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.isExit = false;
-        loadInitialTasks();
-    }
-
-    private void loadInitialTasks() {
-        assert ui != null : "UI must be initialized before loading tasks";
-        assert storage != null : "Storage must be initialized before loading tasks";
-
-        String logo = "  /\\_/\\  \n"
-                + " ( o.o ) \n"
-                + "  > ^ <  \n"
-                + " MINTEL";
-        ui.showWelcome(logo);
-
-        ui.showMessage("Doing some prechecks...");
-        if (storage.fileExists()) {
-            ui.showMessage("Found list_of_tasks.txt in your computer!");
-            ui.showMessage("Checking file...");
-
-            if (storage.isFileFormatCorrect()) {
-                ui.showMessage("Uploaded file to the system!");
-                try {
-                    tasks = new TaskList(storage.loadTasks());
-                } catch (MintelException e) {
-                    ui.showMessage("Error loading tasks: " + e.getMessage());
-                    tasks = new TaskList();
-                }
-            } else {
-                handleInvalidFileFormat();
-            }
-        } else {
-            ui.showMessage("list_of_tasks.txt not found!");
-            tasks = new TaskList();
-        }
-
-        ui.showLine();
-
-        if (!isExit) {
-            ui.showMessage("What can I do for you?");
-            ui.showLine();
-        }
-    }
-
-    private void handleInvalidFileFormat() {
-        ui.showMessage("File is not in correct format!");
-        ui.showMessage("Do you want to overwrite file? If yes, enter \"y\". If no, enter \"n\".");
-
-        String input = ui.readCommand();
-        if (input.equals("y")) {
-            ui.showMessage("Got it! File will be overwrite once a valid task is given!");
-            tasks = new TaskList();
-        } else if (input.equals("n")) {
-            isExit = true;
-            ui.showMessage("Please change the file to the correct format or rename the file before trying again!");
-        } else {
-            isExit = true;
-            ui.showMessage("That is an invalid command! Please change the file to the correct format or"
-                    + "rename the file before trying again!");
-        }
     }
 
     /**
-     * Runs the Mintel chatbot, handling user commands until the exit command is given.
-     * This is the main loop of the application.
+     * Sets the main window for GUI interactions.
      */
-    public void run() {
-        assert tasks != null : "TaskList must be initialized before running";
-        assert ui != null : "UI must be initialized before running";
-        assert storage != null : "Storage must be initialized before running";
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
 
-        while (!isExit) {
-            try {
-                String input = ui.readCommand();
-                ui.showLine();
-                Command command = Parser.parse(input);
-                command.execute(tasks, ui, storage);
-                isExit = command.isExit();
-            } catch (MintelException | java.io.IOException e) {
-                ui.showMessage(e.getMessage());
-            } finally {
-                ui.showLine();
+    /**
+     * Initializes tasks by loading from storage.
+     * Should be called after mainWindow is set.
+     */
+    public void initializeTasks() {
+        assert mainWindow != null : "MainWindow must be set before loading tasks";
+
+        try {
+            tasks = new TaskList(storage.loadTasks());
+
+            List<String> warnings = storage.getWarnings();
+            if (!warnings.isEmpty()) {
+                StringBuilder warningMessage = new StringBuilder();
+                for (String warning : warnings) {
+                    warningMessage.append(warning).append("\n");
+                }
+                mainWindow.showMessage(warningMessage.toString().trim());
             }
+
+        } catch (MintelException e) {
+            mainWindow.showMessage(e.getMessage());
+            tasks = new TaskList();
         }
-        ui.close();
     }
 
     /**
@@ -125,13 +73,12 @@ public class Mintel {
      */
     public String getResponse(String input) {
         assert input != null : "Input to getResponse() cannot be null";
-        assert tasks != null : "TaskList must be initialized";
-        assert ui != null : "UI must be initialized";
-        assert storage != null : "Storage must be initialized";
+        assert tasks != null : "Tasks must be initialized before handling input";
+        assert mainWindow != null : "MainWindow must be set before handling input";
 
         try {
             Command command = Parser.parse(input);
-            String response = command.execute(tasks, ui, storage);
+            String response = command.execute(tasks, mainWindow, storage);
             isExit = command.isExit();
 
             if (isExit) {
@@ -148,11 +95,9 @@ public class Mintel {
     }
 
     /**
-     * The entry point of the Mintel application.
-     *
-     * @param args Command line arguments (not used).
+     * The entry point of the Mintel application (CLI mode).
+     * Note: This is not used when running with GUI.
      */
     public static void main(String[] args) {
-        new Mintel("./data/list_of_task.txt").run();
     }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import mintel.exception.FileOperationException;
 import mintel.exception.MintelException;
 import mintel.model.task.Task;
 
@@ -29,6 +30,7 @@ public class Storage {
     private static final int EVENT_EXPECTED_PIPE_COUNT = 4;
 
     private final String filePath;
+    private List<String> warnings;
 
     /**
      * Constructs a Storage instance with the specified file path.
@@ -41,163 +43,215 @@ public class Storage {
         assert filePath.endsWith(".txt") : "Storage file should be a .txt file: " + filePath;
 
         this.filePath = filePath;
+        this.warnings = new ArrayList<>();
         assert this.filePath.equals(filePath) : "File path not stored correctly";
     }
 
     /**
-     * Checks if the storage file exists.
+     * Gets any warnings from the last load operation.
+     */
+    public List<String> getWarnings() {
+        return warnings;
+    }
+
+    /**
+     * Loads tasks from the storage file with error recovery.
+     * If a line has invalid format, it's skipped and warning is stored.
      *
-     * @return true if file exists and is a regular file
-     */
-    public boolean fileExists() {
-        assert filePath != null : "File path must be initialized";
-
-        File file = new File(filePath);
-        return file.exists() && file.isFile();
-    }
-
-    /**
-     * Validates the format of the storage file.
-     * Checks each line against expected Todo/Deadline/Event formats.
-     *
-     * @return true if file format is correct or file doesn't exist
-     */
-    public boolean isFileFormatCorrect() {
-        assert filePath != null : "File path must be initialized";
-        File taskFile = new File(filePath);
-        assert taskFile != null : "File object creation failed";
-
-        try (Scanner scanner = new Scanner(taskFile)) {
-            return validateFileContent(scanner);
-        } catch (FileNotFoundException e) {
-            assert false : "File not found despite existence check: " + filePath;
-            return true;
-        }
-    }
-
-    /**
-     * Validates all lines in the file.
-     */
-    private boolean validateFileContent(Scanner scanner) {
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            if (line.isEmpty()) {
-                continue;
-            }
-
-            if (!isLineFormatValid(line)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Validates a single line from the file.
-     */
-    private boolean isLineFormatValid(String line) {
-        String[] parts = line.split("\\|", -1);
-        int pipeCount = parts.length - 1;
-
-        assert parts.length > 0 : "Line split resulted in empty array";
-
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-            assert parts[i] != null : "Trimmed part should not be null";
-        }
-
-        return validateTaskFormat(parts, pipeCount, line);
-    }
-
-    /**
-     * Checks the task type and validates its format.
-     */
-    private boolean validateTaskFormat(String[] parts, int pipeCount, String line) {
-        if (parts[0].equals(TASK_TYPE_TODO)) {
-            return validateTodoFormat(parts, pipeCount, line);
-        } else if (parts[0].equals(TASK_TYPE_DEADLINE)) {
-            return validateDeadlineFormat(parts, pipeCount, line);
-        } else if (parts[0].equals(TASK_TYPE_EVENT)) {
-            return validateEventFormat(parts, pipeCount, line);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Validates a Todo task format.
-     */
-    private boolean validateTodoFormat(String[] parts, int pipeCount, String line) {
-        if (pipeCount != TODO_EXPECTED_PIPE_COUNT || parts.length != TODO_EXPECTED_PARTS) {
-            assert false : "Todo format invalid at line " + line;
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Validates a Deadline task format.
-     */
-    private boolean validateDeadlineFormat(String[] parts, int pipeCount, String line) {
-        if (pipeCount != DEADLINE_EXPECTED_PIPE_COUNT || parts.length != DEADLINE_EXPECTED_PARTS) {
-            assert false : "Deadline format invalid at line " + line;
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Validates an Event task format.
-     */
-    private boolean validateEventFormat(String[] parts, int pipeCount, String line) {
-        if (pipeCount != EVENT_EXPECTED_PIPE_COUNT || parts.length != EVENT_EXPECTED_PARTS) {
-            assert false : "Event format invalid at line " + line;
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Loads tasks from the storage file.
-     *
-     * @return A list of tasks loaded from the file.
-     * @throws MintelException If there's an error reading the file.
+     * @return A list of valid tasks loaded from the file.
+     * @throws FileOperationException If critical file access issues occur.
      */
     public ArrayList<Task> loadTasks() throws MintelException {
         assert filePath != null : "File path must be initialized";
 
         ArrayList<Task> tasks = new ArrayList<>();
-        assert tasks != null : "Task list creation failed";
-
         File taskFile = new File(filePath);
-        assert taskFile != null : "File object creation failed";
+        warnings.clear();
 
-        if (!taskFile.exists()) {
-            assert tasks.isEmpty() : "Task list should be empty for non-existent file";
+        if (!fileExists(taskFile)) {
             return tasks;
         }
 
-        assert taskFile.canRead() : "Cannot read task file: " + filePath;
-        assert taskFile.length() >= 0 : "File has negative length: " + filePath;
+        processFileLines(taskFile, tasks);
 
-        try (java.util.Scanner scanner = new java.util.Scanner(taskFile)) {
+        addSummaryWarning(tasks.size());
+        return tasks;
+    }
+
+    /**
+     * Checks if file exists.
+     */
+    private boolean fileExists(File taskFile) {
+        return taskFile.exists();
+    }
+
+    /**
+     * Processes each line in the file.
+     */
+    private void processFileLines(File taskFile, ArrayList<Task> tasks) throws MintelException {
+        int lineNumber = 0;
+
+        try (Scanner scanner = new Scanner(taskFile)) {
             while (scanner.hasNextLine()) {
+                lineNumber++;
                 String line = scanner.nextLine().trim();
+
                 if (line.isEmpty()) {
                     continue;
                 }
 
-                assert !line.contains("\n") : "Line contains newline character";
-
-                Task task = parseTaskLine(line);
-                if (task != null) {
-                    tasks.add(task);
-                }
+                processLine(line, lineNumber, tasks);
             }
-            return tasks;
-        } catch (java.io.FileNotFoundException e) {
-            assert false : "File disappeared between existence check and opening: " + filePath;
-            throw new MintelException("Error loading tasks: " + e.getMessage());
+        } catch (FileNotFoundException e) {
+            throw new MintelException(e.getMessage() + " ₍^◞ ˕ ◟^₎⟆");
+        }
+    }
+
+    /**
+     * Processes a single line from the file.
+     */
+    private void processLine(String line, int lineNumber, ArrayList<Task> tasks) {
+        String[] parts = splitAndTrimLine(line);
+
+        if (hasBlankFields(parts, line, lineNumber)) {
+            return;
+        }
+
+        if (!isValidTaskFormat(parts, line, lineNumber)) {
+            return;
+        }
+
+        parseAndAddTask(line, lineNumber, tasks);
+    }
+
+    /**
+     * Splits line by pipe delimiter and trims each part.
+     */
+    private String[] splitAndTrimLine(String line) {
+        String[] parts = line.split("\\|", -1);
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        return parts;
+    }
+
+    /**
+     * Checks for blank fields in the line.
+     */
+    private boolean hasBlankFields(String[] parts, String line, int lineNumber) {
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].isEmpty()) {
+                addBlankFieldWarning(line, lineNumber, i + 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Adds warning for blank field.
+     */
+    private void addBlankFieldWarning(String line, int lineNumber, int position) {
+        warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
+        warnings.add("  └─ Empty field at position " + position);
+    }
+
+    /**
+     * Validates task format based on task type.
+     */
+    private boolean isValidTaskFormat(String[] parts, String line, int lineNumber) {
+        String taskType = parts[0];
+        int pipeCount = parts.length - 1;
+
+        if (taskType.equals(TASK_TYPE_TODO)) {
+            return validateTodoFormat(parts, pipeCount, line, lineNumber);
+        } else if (taskType.equals(TASK_TYPE_DEADLINE)) {
+            return validateDeadlineFormat(parts, pipeCount, line, lineNumber);
+        } else if (taskType.equals(TASK_TYPE_EVENT)) {
+            return validateEventFormat(parts, pipeCount, line, lineNumber);
+        } else {
+            addUnknownTypeWarning(line, lineNumber, taskType);
+            return false;
+        }
+    }
+
+    /**
+     * Validates Todo task format.
+     */
+    private boolean validateTodoFormat(String[] parts, int pipeCount, String line, int lineNumber) {
+        if (pipeCount != TODO_EXPECTED_PIPE_COUNT || parts.length != TODO_EXPECTED_PARTS) {
+            addFormatWarning(line, lineNumber, "Todo", TODO_EXPECTED_PARTS);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validates Deadline task format.
+     */
+    private boolean validateDeadlineFormat(String[] parts, int pipeCount, String line, int lineNumber) {
+        if (pipeCount != DEADLINE_EXPECTED_PIPE_COUNT || parts.length != DEADLINE_EXPECTED_PARTS) {
+            addFormatWarning(line, lineNumber, "Deadline", DEADLINE_EXPECTED_PARTS);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validates Event task format.
+     */
+    private boolean validateEventFormat(String[] parts, int pipeCount, String line, int lineNumber) {
+        if (pipeCount != EVENT_EXPECTED_PIPE_COUNT || parts.length != EVENT_EXPECTED_PARTS) {
+            addFormatWarning(line, lineNumber, "Event", EVENT_EXPECTED_PARTS);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Adds warning for incorrect format.
+     */
+    private void addFormatWarning(String line, int lineNumber, String taskType, int expectedParts) {
+        warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
+        warnings.add("  └─ " + taskType + " should have " + expectedParts + " fields");
+    }
+
+    /**
+     * Adds warning for unknown task type.
+     */
+    private void addUnknownTypeWarning(String line, int lineNumber, String taskType) {
+        warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
+        warnings.add("  └─ Unknown task type: " + taskType);
+    }
+
+    /**
+     * Parses line and adds task to list.
+     */
+    private void parseAndAddTask(String line, int lineNumber, ArrayList<Task> tasks) {
+        try {
+            Task task = Task.fromFileString(line);
+            tasks.add(task);
+        } catch (MintelException e) {
+            addParseWarning(line, lineNumber, e.getMessage());
+        }
+    }
+
+    /**
+     * Adds warning for parsing error.
+     */
+    private void addParseWarning(String line, int lineNumber, String errorMessage) {
+        warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
+        warnings.add("  └─ " + errorMessage);
+    }
+
+    /**
+     * Adds summary warning at the end.
+     */
+    private void addSummaryWarning(int taskCount) {
+        if (!warnings.isEmpty()) {
+            warnings.add(0, "Meow~ Found " + (warnings.size() / 2) + " issue(s) in file:");
+            warnings.add("Loaded " + taskCount + " valid tasks.");
+            warnings.add("Invalid Tasks will be removed once a valid command is given!");
         }
     }
 
@@ -235,20 +289,5 @@ public class Storage {
             fw.write(line + "\n");
         }
         fw.close();
-    }
-
-    /**
-     * Parses a single line from the storage file into a Task object.
-     *
-     * @param line Raw line from storage file
-     * @return Task object parsed from the line
-     * @throws MintelException if line format is invalid
-     */
-    private Task parseTaskLine(String line) throws MintelException {
-        assert line != null : "Line to parse cannot be null";
-        assert !line.trim().isEmpty() : "Line to parse cannot be empty";
-        assert line.contains("|") : "Line should contain pipe delimiter: " + line;
-
-        return Task.fromFileString(line);
     }
 }

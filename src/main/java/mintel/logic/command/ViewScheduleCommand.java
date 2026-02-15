@@ -1,10 +1,12 @@
 package mintel.logic.command;
 
+import java.io.IOException;
+
+import mintel.MainWindow;
 import mintel.exception.EmptyDescriptionException;
 import mintel.exception.MintelException;
 import mintel.model.tasklist.TaskList;
 import mintel.storage.Storage;
-import mintel.ui.Ui;
 
 /**
  * ViewScheduleCommand displays all deadlines and events scheduled on a specific date.
@@ -33,9 +35,11 @@ public class ViewScheduleCommand extends Command {
     }
 
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException {
+    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage) throws MintelException, IOException {
         assert tasks != null : "TaskList cannot be null";
         assert date != null : "Date must be set";
+
+        storage.saveTasks(tasks.getAllTasks());
 
         return tasks.getScheduleByDate(date);
     }

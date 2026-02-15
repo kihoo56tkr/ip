@@ -50,13 +50,26 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
+     * Shows a message from Mintel in the dialog container.
+     * This is used for warnings, errors, and system messages.
+     *
+     * @param message The message to display
+     */
+    public void showMessage(String message) {
+        dialogContainer.getChildren().add(
+                DialogBox.getMintelDialog(message, mintelImage)
+        );
+    }
+
+    /**
      * Injects the Mintel instance
      */
     public void setMintel(Mintel m) {
         assert m != null : "Cannot inject null Mintel instance";
-        assert !m.isExit() : "Mintel should not be in exit state when injected";
-
         mintel = m;
+        mintel.setMainWindow(this); // Connect back to GUI
+
+        mintel.initializeTasks();
     }
 
     /**

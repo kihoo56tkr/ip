@@ -2,12 +2,12 @@ package mintel.logic.command;
 
 import java.io.IOException;
 
+import mintel.MainWindow;
 import mintel.exception.EmptyDescriptionException;
 import mintel.exception.MintelException;
 import mintel.model.task.Task;
 import mintel.model.tasklist.TaskList;
 import mintel.storage.Storage;
-import mintel.ui.Ui;
 
 /**
  * DeleteCommand in the Mintel application.
@@ -36,15 +36,15 @@ public class DeleteCommand extends Command {
      * Task with the index in the input.
      *
      * @param tasks   The task list to operate on.
-     * @param ui      The user interface for displaying messages.
+     * @param mainWindow      The window interface for displaying messages.
      * @param storage The storage handler for saving tasks.
      * @throws MintelException If there's an error during command execution.
      * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws MintelException, java.io.IOException {
+    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage) throws MintelException, java.io.IOException {
         assert tasks != null : "TaskList cannot be null";
-        assert ui != null : "Ui cannot be null";
+        assert mainWindow    != null : "MainWindow cannot be null";
         assert storage != null : "Storage cannot be null";
 
         if (this.inputList.length <= 1) {
