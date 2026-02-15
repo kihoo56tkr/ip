@@ -2,7 +2,6 @@ package mintel.logic.command;
 
 import java.io.IOException;
 
-import mintel.Main;
 import mintel.MainWindow;
 import mintel.exception.EmptyDescriptionException;
 import mintel.exception.MintelException;
@@ -45,7 +44,8 @@ public class FindCommand extends Command {
      * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
-    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage) throws MintelException, java.io.IOException {
+    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage)
+            throws MintelException, java.io.IOException {
         assert tasks != null : "TaskList cannot be null";
         assert mainWindow != null : "MainWindow cannot be null";
         assert storage != null : "Storage cannot be null";

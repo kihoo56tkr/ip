@@ -95,16 +95,16 @@ public class TaskList {
             } else if (newTask instanceof Deadline) {
                 Deadline existing = (Deadline) existingTask;
                 Deadline newDeadline = (Deadline) newTask;
-                if (existing.getName().equals(newDeadline.getName()) &&
-                        existing.getByDate().equals(newDeadline.getByDate())) {
+                if (existing.getName().equals(newDeadline.getName())
+                        && existing.getByDate().equals(newDeadline.getByDate())) {
                     return true;
                 }
             } else if (newTask instanceof Event) {
                 Event existing = (Event) existingTask;
                 Event newEvent = (Event) newTask;
-                if (existing.getName().equals(newEvent.getName()) &&
-                        existing.getFromDate().equals(newEvent.getFromDate()) &&
-                        existing.getToDate().equals(newEvent.getToDate())) {
+                if (existing.getName().equals(newEvent.getName())
+                        && existing.getFromDate().equals(newEvent.getFromDate())
+                        && existing.getToDate().equals(newEvent.getToDate())) {
                     return true;
                 }
             }

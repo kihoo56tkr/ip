@@ -40,7 +40,8 @@ public class AddTodoCommand extends Command {
      * @throws IOException     If there's an error saving tasks to file.
      */
     @Override
-    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage) throws MintelException, java.io.IOException {
+    public String execute(TaskList tasks, MainWindow mainWindow, Storage storage)
+            throws MintelException, java.io.IOException {
         assert tasks != null : "TaskList cannot be null";
         assert mainWindow != null : "MainWindow cannot be null";
         assert storage != null : "Storage cannot be null";
