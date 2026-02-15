@@ -18,7 +18,7 @@ public class HelpCommand extends Command {
             + "deadline DESCRIPTION /by DATE\n"
             + "e.g., deadline homework /by 2026-03-15\n"
             + "e.g., deadline project /by Mar 20 2026\n\n"
-            +  "event DESCRIPTION /from DATE /to DATE\n"
+            + "event DESCRIPTION /from DATE /to DATE\n"
             + "e.g., event meeting /from 2026-03-15 /to 2026-03-16\n"
             + "e.g., event conference /from Mar 15 2026 /to Mar 18 2026\n\n"
             + "Viewing Tasks:\n"
