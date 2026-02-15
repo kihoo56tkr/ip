@@ -22,7 +22,7 @@ public class ExitCommand extends Command {
         assert ui != null : "Ui cannot be null";
         assert storage != null : "Storage cannot be null";
 
-        return "Bye. Hope to see you again soon!";
+        return "Meow Meow~ Bye! Hope to see you again soon!";
     }
 
     @Override

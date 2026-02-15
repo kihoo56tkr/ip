@@ -8,6 +8,7 @@
 
 .mintel-dialog {
     -fx-background-color: #FFADA9;
+    -fx-border-color: #FF6960;
     -fx-text-fill: #390200;
     -fx-border-width: 2px;
     -fx-background-radius: 1em 1em 0 1em;
@@ -29,10 +30,5 @@
 
     /* Rotate image clockwise by degrees. */
     -fx-rotate: 0;
-}
-
-.reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
 }
 

@@ -73,7 +73,7 @@ public class MarkCommand extends Command {
 
             return result;
         } catch (NumberFormatException e) {
-            throw new MintelException("Please provide a valid task number!");
+            throw new MintelException("Please provide a valid task number! ₍^◞ ˕ ◟^₎⟆");
         }
     }
 

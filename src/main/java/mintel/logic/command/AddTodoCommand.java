@@ -63,7 +63,7 @@ public class AddTodoCommand extends Command {
         tasks.add(todo);
         storage.saveTasks(tasks.getAllTasks());
 
-        return "Got it. I've added this task:\n  " + todo
+        return "MEOWRiffic! ദ്ദി(• ⩊ •^ I've added this task:\n  " + todo
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 

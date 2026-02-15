@@ -63,9 +63,9 @@ public class FindCommand extends Command {
         String filteredTasks = tasks.getFilteredTasks(keywords);
 
         if (filteredTasks.isEmpty()) {
-            return "There is no tasks that contains the keyword '" + keywordsString + "'!";
+            return "Meow~ There is no tasks that contains the keyword '" + keywordsString + "'!";
         } else {
-            return "Here are the matching tasks in your list:\n" + filteredTasks;
+            return "Meow~ Here are the matching tasks in your list:\n" + filteredTasks;
         }
     }
 

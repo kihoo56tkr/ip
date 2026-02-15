@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import mintel.exception.InvalidDateFormatException;
 import mintel.exception.MintelException;
 import mintel.exception.OutOfRangeException;
 import mintel.model.task.Deadline;
@@ -181,14 +182,14 @@ public class TaskList {
     public String getListString() {
         if (this.tasks.isEmpty()) {
             assert this.taskCount == 0 : "Empty list but count > 0";
-            return "Your list is empty!";
+            return "Meow~ Your list is empty!";
         }
 
         return Stream.iterate(0, i -> i + 1)
                 .limit(tasks.size())
                 .map(i -> (i + 1) + "." + tasks.get(i))
                 .collect(Collectors.joining("\n",
-                        "Here are the tasks in your list:\n", ""));
+                        "MEOWRiffic! ദ്ദി(• ⩊ •^ Here are the tasks in your list:\n", ""));
     }
 
     /**
@@ -239,19 +240,19 @@ public class TaskList {
      * @param date Target date in yyyy-MM-dd format (e.g., "2026-03-15").
      * @return Formatted schedule string.
      */
-    public String getScheduleByDate(String date) {
+    public String getScheduleByDate(String date) throws InvalidDateFormatException {
         assert date != null : "Date cannot be null";
         assert !date.trim().isEmpty() : "Date cannot be empty";
 
         LocalDate targetDate;
         try {
             targetDate = LocalDate.parse(date);
-        } catch (DateTimeParseException e) {
-            return "Invalid date format! Please use yyyy-MM-dd (e.g., 2026-03-15).";
+        } catch (DateTimeParseException e2) {
+            throw new InvalidDateFormatException("");
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Schedule for ").append(date).append(":\n");
+        sb.append("MEOWRiffic! ദ്ദി(• ⩊ •^ Schedule for ").append(date).append(":\n");
 
         int count = 0;
 
@@ -272,7 +273,7 @@ public class TaskList {
         }
 
         if (count == 0) {
-            return "No deadlines or events scheduled on " + date + ".";
+            return "Meow~ No deadlines or events scheduled on " + date + ".";
         }
 
         return sb.toString().trim();
