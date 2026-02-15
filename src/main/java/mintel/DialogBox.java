@@ -53,6 +53,22 @@ public class DialogBox extends HBox {
             assert false : "Failed to load DialogBox FXML: " + e.getMessage();
         }
 
+        setupImageClipping(img);
+
+        dialog.setText(text);
+        displayPicture.setImage(img);
+
+        assert dialog.getText().equals(text) : "Dialog text not set correctly";
+        assert !dialog.getText().isEmpty() : "Dialog text should not be empty";
+    }
+
+    /**
+     * Applies a circular clip to the profile image.
+     * The image is scaled to fit within a circle of diameter DIAMETER.
+     *
+     * @param img The image to be displayed and clipped.
+     */
+    private void setupImageClipping(Image img) {
         Circle clip = new Circle();
         clip.setRadius(DIAMETER / 2);
         clip.setCenterX(DIAMETER / 2);
@@ -69,12 +85,6 @@ public class DialogBox extends HBox {
         assert displayPicture.getFitWidth() == 100 : "Fit width not set correctly";
         assert displayPicture.getFitHeight() == 100 : "Fit height not set correctly";
         assert displayPicture.isPreserveRatio() : "Preserve ratio should be true";
-
-        dialog.setText(text);
-        displayPicture.setImage(img);
-
-        assert dialog.getText().equals(text) : "Dialog text not set correctly";
-        assert !dialog.getText().isEmpty() : "Dialog text should not be empty";
     }
 
     /**

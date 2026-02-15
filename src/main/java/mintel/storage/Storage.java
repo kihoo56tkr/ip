@@ -1,10 +1,12 @@
 package mintel.storage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import mintel.exception.MintelException;
 import mintel.model.task.Task;
@@ -62,51 +64,97 @@ public class Storage {
      */
     public boolean isFileFormatCorrect() {
         assert filePath != null : "File path must be initialized";
-
         File taskFile = new File(filePath);
         assert taskFile != null : "File object creation failed";
 
-        try (java.util.Scanner scanner = new java.util.Scanner(taskFile)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
-
-                String[] parts = line.split("\\|", -1);
-                int pipeCount = parts.length - 1;
-
-                assert parts.length > 0 : "Line split resulted in empty array";
-
-                for (int i = 0; i < parts.length; i++) {
-                    parts[i] = parts[i].trim();
-                    assert parts[i] != null : "Trimmed part should not be null";
-                }
-
-                if (parts[0].equals(TASK_TYPE_TODO)) {
-                    if (pipeCount != TODO_EXPECTED_PIPE_COUNT || parts.length != TODO_EXPECTED_PARTS) {
-                        assert false : "Todo format invalid at line " + line;
-                        return false;
-                    }
-                } else if (parts[0].equals(TASK_TYPE_DEADLINE)) {
-                    if (pipeCount != DEADLINE_EXPECTED_PIPE_COUNT || parts.length != DEADLINE_EXPECTED_PARTS) {
-                        assert false : "Deadline format invalid at line " + line;
-                        return false;
-                    }
-                } else if (parts[0].equals(TASK_TYPE_EVENT)) {
-                    if (pipeCount != EVENT_EXPECTED_PIPE_COUNT || parts.length != EVENT_EXPECTED_PARTS) {
-                        assert false : "Event format invalid at line " + line;
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-            return true;
-        } catch (java.io.FileNotFoundException e) {
+        try (Scanner scanner = new Scanner(taskFile)) {
+            return validateFileContent(scanner);
+        } catch (FileNotFoundException e) {
             assert false : "File not found despite existence check: " + filePath;
             return true;
         }
+    }
+
+    /**
+     * Validates all lines in the file.
+     */
+    private boolean validateFileContent(Scanner scanner) {
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+
+            if (!isLineFormatValid(line)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Validates a single line from the file.
+     */
+    private boolean isLineFormatValid(String line) {
+        String[] parts = line.split("\\|", -1);
+        int pipeCount = parts.length - 1;
+
+        assert parts.length > 0 : "Line split resulted in empty array";
+
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+            assert parts[i] != null : "Trimmed part should not be null";
+        }
+
+        return validateTaskFormat(parts, pipeCount, line);
+    }
+
+    /**
+     * Checks the task type and validates its format.
+     */
+    private boolean validateTaskFormat(String[] parts, int pipeCount, String line) {
+        if (parts[0].equals(TASK_TYPE_TODO)) {
+            return validateTodoFormat(parts, pipeCount, line);
+        } else if (parts[0].equals(TASK_TYPE_DEADLINE)) {
+            return validateDeadlineFormat(parts, pipeCount, line);
+        } else if (parts[0].equals(TASK_TYPE_EVENT)) {
+            return validateEventFormat(parts, pipeCount, line);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Validates a Todo task format.
+     */
+    private boolean validateTodoFormat(String[] parts, int pipeCount, String line) {
+        if (pipeCount != TODO_EXPECTED_PIPE_COUNT || parts.length != TODO_EXPECTED_PARTS) {
+            assert false : "Todo format invalid at line " + line;
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validates a Deadline task format.
+     */
+    private boolean validateDeadlineFormat(String[] parts, int pipeCount, String line) {
+        if (pipeCount != DEADLINE_EXPECTED_PIPE_COUNT || parts.length != DEADLINE_EXPECTED_PARTS) {
+            assert false : "Deadline format invalid at line " + line;
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validates an Event task format.
+     */
+    private boolean validateEventFormat(String[] parts, int pipeCount, String line) {
+        if (pipeCount != EVENT_EXPECTED_PIPE_COUNT || parts.length != EVENT_EXPECTED_PARTS) {
+            assert false : "Event format invalid at line " + line;
+            return false;
+        }
+        return true;
     }
 
     /**

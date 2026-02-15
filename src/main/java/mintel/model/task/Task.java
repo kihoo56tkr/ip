@@ -118,10 +118,34 @@ public abstract class Task {
      * @throws MintelException If the file string format is invalid.
      */
     public static Task fromFileString(String fileString) throws MintelException {
+        validateFileString(fileString);
+        String[] parts = parseAndTrimParts(fileString);
+        String type = parts[0];
+        boolean isDone = parseStatus(parts[1]);
+        String description = parts[2];
+
+        Task task = createTaskByType(type, description, parts);
+        if (isDone) {
+            task.markAsDone();
+        }
+
+        validateTask(task, isDone);
+        return task;
+    }
+
+    /**
+     * Validates the file string is not null/empty.
+     */
+    private static void validateFileString(String fileString) throws MintelException {
         assert fileString != null : "File string cannot be null";
         assert !fileString.trim().isEmpty() : "File string cannot be empty";
         assert fileString.contains("|") : "File string should contain pipe delimiter: " + fileString;
+    }
 
+    /**
+     * Splits and trims the file string parts.
+     */
+    private static String[] parseAndTrimParts(String fileString) throws MintelException {
         String[] parts = fileString.split("\\|");
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
@@ -132,48 +156,76 @@ public abstract class Task {
         }
 
         assert parts.length >= 3 : "File string should have at least 3 parts: " + fileString;
+        return parts;
+    }
 
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
+    /**
+     * Parses the status string ("1" or "0") to boolean.
+     */
+    private static boolean parseStatus(String statusStr) {
+        boolean isDone = statusStr.equals("1");
+        assert isDone == (statusStr.equals("1")) : "Status parsing incorrect";
+        return isDone;
+    }
 
+    /**
+     * Creates the appropriate task type based on type string.
+     */
+    private static Task createTaskByType(String type, String description, String[] parts)
+            throws MintelException {
         assert type != null : "Task type should not be null";
-        assert isDone == (parts[1].equals("1")) : "Status parsing incorrect";
         assert description != null : "Task description should not be null";
-
-        Task task;
 
         switch (type) {
         case "T":
-            assert parts.length == 3 : "Todo should have exactly 3 parts";
-            task = new Todo(description);
-            break;
+            return createTodo(description, parts);
         case "D":
-            if (parts.length < DEADLINE_EXPECTED_PARTS) {
-                throw new MintelException("Invalid deadline format: " + fileString);
-            }
-            assert parts.length == 4 : "Deadline should have exactly 4 parts";
-            task = new Deadline(description, parts[3]);
-            break;
+            return createDeadline(description, parts);
         case "E":
-            if (parts.length < EVENT_EXPECTED_PARTS) {
-                throw new MintelException("Invalid event format: " + fileString);
-            }
-            assert parts.length == 5 : "Event should have exactly 5 parts";
-            task = new Event(description, parts[3].substring(5), parts[4].substring(3));
-            break;
+            return createEvent(description, parts);
         default:
             throw new MintelException("Unknown task type in file: " + type);
         }
+    }
 
-        if (isDone) {
-            task.markAsDone();
+    /**
+     * Creates a Todo task.
+     */
+    private static Task createTodo(String description, String[] parts) throws MintelException {
+        assert parts.length == 3 : "Todo should have exactly 3 parts";
+        return new Todo(description);
+    }
+
+    /**
+     * Creates a Deadline task.
+     */
+    private static Task createDeadline(String description, String[] parts) throws MintelException {
+        if (parts.length < DEADLINE_EXPECTED_PARTS) {
+            throw new MintelException("Invalid deadline format");
         }
+        assert parts.length == 4 : "Deadline should have exactly 4 parts";
+        return new Deadline(description, parts[3]);
+    }
 
-        assert task.getIsDone() == isDone : "Task done status mismatch";
+    /**
+     * Creates an Event task.
+     */
+    private static Task createEvent(String description, String[] parts) throws MintelException {
+        if (parts.length < EVENT_EXPECTED_PARTS) {
+            throw new MintelException("Invalid event format");
+        }
+        assert parts.length == 5 : "Event should have exactly 5 parts";
+        String from = parts[3].substring(5);
+        String to = parts[4].substring(3);
+        return new Event(description, from, to);
+    }
+
+    /**
+     * Validates the created task.
+     */
+    private static void validateTask(Task task, boolean expectedStatus) {
+        assert task.getIsDone() == expectedStatus : "Task done status mismatch";
         assert task.getName() != null : "Created task has null name";
         assert !task.getName().isEmpty() : "Created task has empty name";
-
-        return task;
     }
 }
