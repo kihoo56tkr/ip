@@ -9,6 +9,7 @@ import mintel.logic.command.Command;
 import mintel.logic.command.DeleteCommand;
 import mintel.logic.command.ExitCommand;
 import mintel.logic.command.FindCommand;
+import mintel.logic.command.HelpCommand;
 import mintel.logic.command.ListCommand;
 import mintel.logic.command.MarkCommand;
 import mintel.logic.command.ViewScheduleCommand;
@@ -51,6 +52,8 @@ public class Parser {
             return new FindCommand(inputList, input);
         } else if (input.startsWith("view")) {
             return new ViewScheduleCommand(input);
+        } else if (input.equals("/help")) {
+            return new HelpCommand();
         } else {
             throw new InvalidCommandException();
         }
