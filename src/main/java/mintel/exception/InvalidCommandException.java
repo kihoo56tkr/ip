@@ -10,6 +10,6 @@ public class InvalidCommandException extends MintelException {
      * Constructs an InvalidCommandException with an error message.
      */
     public InvalidCommandException() {
-        super("That is an invalid command! ; _ ;");
+        super("That is an invalid command! ₍^◞ ˕ ◟^₎⟆");
     }
 }

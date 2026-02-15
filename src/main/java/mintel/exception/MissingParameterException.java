@@ -12,6 +12,6 @@ public class MissingParameterException extends MintelException {
      * @param message The parameter missing in the command.
      */
     public MissingParameterException(String message) {
-        super("You are missing the " + message + " parameter! ; _ ;");
+        super("You are missing the " + message + " parameter! ₍^◞ ˕ ◟^₎⟆");
     }
 }

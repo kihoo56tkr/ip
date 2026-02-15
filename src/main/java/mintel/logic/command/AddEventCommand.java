@@ -93,7 +93,7 @@ public class AddEventCommand extends Command {
 
         storage.saveTasks(tasks.getAllTasks());
 
-        return "Got it. I've added this task:\n  " + event
+        return "MEOWRiffic! ദ്ദി(• ⩊ •^ I've added this task:\n  " + event
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 

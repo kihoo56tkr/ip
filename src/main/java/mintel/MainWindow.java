@@ -45,7 +45,7 @@ public class MainWindow extends AnchorPane {
 
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().addAll(
-                DialogBox.getMintelDialog("Hello! I'm Mintel\n" + "What can I do for you?", mintelImage)
+                DialogBox.getMintelDialog("MEOW! I'm Mintel\n" + "What can I do for you?", mintelImage)
         );
     }
 

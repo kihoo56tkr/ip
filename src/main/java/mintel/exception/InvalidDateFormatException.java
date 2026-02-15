@@ -12,6 +12,6 @@ public class InvalidDateFormatException extends MintelException {
      * @param message The detail message explaining the date format error.
      */
     public InvalidDateFormatException(String message) {
-        super("Date format is invalid! Format example: 2026-02-26");
+        super("Date format is invalid! Format example: 2026-02-26 ₍^◞ ˕ ◟^₎⟆");
     }
 }

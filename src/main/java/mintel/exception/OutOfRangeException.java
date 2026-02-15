@@ -10,6 +10,6 @@ public class OutOfRangeException extends MintelException {
      * Constructs an OutOfRangeException with an error message.
      */
     public OutOfRangeException() {
-        super("That is more than the number of tasks in the list! ; _ ;");
+        super("That is more than the number of tasks in the list! ₍^◞ ˕ ◟^₎⟆");
     }
 }

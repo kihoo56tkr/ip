@@ -1,2 +1,0 @@
-T | 0 | home
-T | 0 | homework
