@@ -4,3 +4,4 @@ D | 0 | festival planning | Jan 15 2026
 T | 0 | chores
 T | 0 | h
 T | 0 | homework
+T | 0 | housework

@@ -79,7 +79,7 @@ public class AddDeadlineCommand extends Command {
 
         storage.saveTasks(tasks.getAllTasks());
 
-        return "MEOWRiffic! ദ്ദി(• ⩊ •^ I've added this task:\n  " + deadline
+        return "MEOWRiffic! I've added this task:\n  " + deadline
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 

@@ -63,8 +63,8 @@ public class MarkCommand extends Command {
             storage.saveTasks(tasks.getAllTasks());
 
             String message = isMarkAsCompleted
-                    ? "MEOWRiffic! ദ്ദി(• ⩊ •^ I've marked this task as done:\n  "
-                    : "MEOWRiffic! ദ്ദി(• ⩊ •^ I've marked this task as not done yet:\n  ";
+                    ? "MEOWRiffic! I've marked this task as done:\n  "
+                    : "MEOWRiffic! I've marked this task as not done yet:\n  ";
 
             String result = message + tasks.get(index);
 
@@ -74,7 +74,7 @@ public class MarkCommand extends Command {
 
             return result;
         } catch (NumberFormatException e) {
-            throw new MintelException("Please provide a valid task number! ₍^◞ ˕ ◟^₎⟆");
+            throw new MintelException("Please provide a valid task number! Meow...");
         }
     }
 

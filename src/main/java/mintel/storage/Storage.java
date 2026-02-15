@@ -103,7 +103,7 @@ public class Storage {
                 processLine(line, lineNumber, tasks);
             }
         } catch (FileNotFoundException e) {
-            throw new MintelException(e.getMessage() + " ₍^◞ ˕ ◟^₎⟆");
+            throw new MintelException(e.getMessage() + " Meow...");
         }
     }
 

@@ -12,6 +12,6 @@ public class EmptyDescriptionException extends MintelException {
      * @param taskType The Task class with missing description.
      */
     public EmptyDescriptionException(String taskType) {
-        super("The description of a " + taskType + " cannot be empty! ₍^◞ ˕ ◟^₎⟆");
+        super("The description of a " + taskType + " cannot be empty! Meow...");
     }
 }

@@ -12,6 +12,6 @@ public class DateLogicException extends MintelException {
      * @param message The detail message explaining the date error.
      */
     public DateLogicException(String message) {
-        super("The 'From' date should be before the 'To' date! ₍^◞ ˕ ◟^₎⟆");
+        super("The 'From' date should be before the 'To' date! Meow...");
     }
 }
