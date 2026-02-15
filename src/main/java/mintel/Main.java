@@ -46,6 +46,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             assert scene != null : "Scene creation failed";
 
+            stage.setTitle("Mintel");
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
