@@ -22,7 +22,8 @@ public class ExitCommand extends Command {
         assert mainWindow != null : "MainWindow cannot be null";
         assert storage != null : "Storage cannot be null";
 
-        return "Meow Meow~ Bye! See you again soon!";
+        return "Meow Meow~ Bye! See you again soon!"
+                + "\n(The window will close automatically after 3 seconds)";
     }
 
     @Override

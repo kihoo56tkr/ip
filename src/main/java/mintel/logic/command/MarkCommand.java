@@ -63,8 +63,8 @@ public class MarkCommand extends Command {
             storage.saveTasks(tasks.getAllTasks());
 
             String message = isMarkAsCompleted
-                    ? "Nice! I've marked this task as done:\n  "
-                    : "OK, I've marked this task as not done yet:\n  ";
+                    ? "MEOWRiffic! ദ്ദി(• ⩊ •^ I've marked this task as done:\n  "
+                    : "MEOWRiffic! ദ്ദി(• ⩊ •^ I've marked this task as not done yet:\n  ";
 
             String result = message + tasks.get(index);
 

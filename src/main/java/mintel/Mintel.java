@@ -82,7 +82,7 @@ public class Mintel {
             isExit = command.isExit();
 
             if (isExit) {
-                return response + "\n(The window will close automatically after 3 seconds)";
+                return response;
             }
             return response;
         } catch (MintelException | java.io.IOException e) {
