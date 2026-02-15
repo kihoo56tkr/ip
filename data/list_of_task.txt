@@ -1,1 +1,5 @@
 T | 0 | homework
+D | 0 | project | Mar 20 2026
+E | 0 | festival | From: Jan 10 2026 | To: May 10 2026
+D | 0 | festival planning | Jan 15 2026
+T | 0 | chores

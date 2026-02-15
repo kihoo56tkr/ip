@@ -14,14 +14,14 @@ import mintel.exception.InvalidDateFormatException;
 public class DeadlineTest {
 
     @Test
-    public void testValidDates_yyyyMMdd() throws InvalidDateFormatException {
+    public void testValidDatesOne() throws InvalidDateFormatException {
         Deadline deadline = new Deadline("Test task", "2026-03-15");
         assertEquals("2026-03-15", deadline.getByDate().toString());
         assertEquals("Mar 15 2026", deadline.displayBy);
     }
 
     @Test
-    public void testValidDates_MMMddyyyy() throws InvalidDateFormatException {
+    public void testValidDatesTwo() throws InvalidDateFormatException {
         Deadline deadline = new Deadline("Test task", "Mar 15 2026");
         assertEquals("2026-03-15", deadline.getByDate().toString());
         assertEquals("Mar 15 2026", deadline.displayBy);
