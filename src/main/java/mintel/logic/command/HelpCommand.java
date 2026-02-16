@@ -39,7 +39,7 @@ public class HelpCommand extends Command {
             + "bye - Exit Mintel\n\n"
             + "Date Formats:\n"
             + "yyyy-MM-dd (e.g., 2026-03-15)\n"
-            + "MMM d yyyy (e.g., Mar 15 2026)";
+            + "MMM dd yyyy (e.g., Mar 05 2026)";
 
     @Override
     public String execute(TaskList tasks, MainWindow mainWindow, Storage storage) throws IOException {
