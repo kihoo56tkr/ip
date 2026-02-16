@@ -42,7 +42,7 @@ Adds a task that needs to be done by a specific date.
 
 **Date formats accepted:**
 - `yyyy-MM-dd` (e.g., `2026-03-15`)
-- `MMM d yyyy` (e.g., `Mar 15 2026`)
+- `MMM dd yyyy` (e.g., `Mar 15 2026`)
 
 **Example:** `deadline homework /by 2026-03-15`
 
