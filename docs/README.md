@@ -69,7 +69,7 @@ MEOWRiffic! I've added this task:
 [E][ ] team meeting (from: Mar 15 2026 to: Mar 16 2026)
 Now you have 3 tasks in the list.
 ```
-> ⚠️ **Note:** Start date must be before or equal to end date.
+> ⚠️ **Note:** Start date must be before end date.
 ---
 
 ## Listing Tasks

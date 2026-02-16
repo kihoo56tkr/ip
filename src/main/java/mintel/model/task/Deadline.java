@@ -50,7 +50,7 @@ public class Deadline extends Task {
 
             LocalDate date = LocalDate.parse(dateStr, mmmSmart);
 
-            String roundTrip = date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+            String roundTrip = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
             if (!roundTrip.equalsIgnoreCase(dateStr)
                     && !roundTrip.replace("  ", " ").equals(dateStr)) {
                 throw new InvalidDateFormatException("Invalid date: " + dateStr

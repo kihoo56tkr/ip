@@ -153,7 +153,7 @@ public class Storage {
      */
     private void addBlankFieldWarning(String line, int lineNumber, int position) {
         warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
-        warnings.add("  └─ Empty field at position " + position);
+        warnings.add(">> Empty field at position " + position);
     }
 
     /**
@@ -213,7 +213,7 @@ public class Storage {
      */
     private void addFormatWarning(String line, int lineNumber, String taskType, int expectedParts) {
         warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
-        warnings.add("  └─ " + taskType + " should have " + expectedParts + " fields");
+        warnings.add(">> " + taskType + " should have " + expectedParts + " fields");
     }
 
     /**
@@ -221,7 +221,7 @@ public class Storage {
      */
     private void addUnknownTypeWarning(String line, int lineNumber, String taskType) {
         warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
-        warnings.add("  └─ Unknown task type: " + taskType);
+        warnings.add(">> Unknown task type: " + taskType);
     }
 
     /**
@@ -241,7 +241,7 @@ public class Storage {
      */
     private void addParseWarning(String line, int lineNumber, String errorMessage) {
         warnings.add("Meow~ Skipping invalid line " + lineNumber + ": " + line);
-        warnings.add("  └─ " + errorMessage);
+        warnings.add(">> " + errorMessage);
     }
 
     /**
