@@ -29,7 +29,7 @@ public class DeadlineTest {
 
     @Test
     public void testValidDates_flexibleDay() throws InvalidDateFormatException {
-        Deadline deadline = new Deadline("Test task", "Mar 5 2026");
+        Deadline deadline = new Deadline("Test task", "Mar 05 2026");
         assertEquals("2026-03-05", deadline.getByDate().toString());
         assertEquals("Mar 05 2026", deadline.displayBy);
     }
